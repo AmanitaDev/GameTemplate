@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f15bcfc337a044539eaa28666a8d12b5, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  defaultMusicVolume: 0.7
-  defaultEffectVolume: 0.7
+  defaultMusicVolume: 0.2
+  defaultEffectVolume: 0.2
   defaultResolutionIndex: 0
   defaultFullscreen: 1
   defaultVSync: 1

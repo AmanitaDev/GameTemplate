@@ -24,26 +24,24 @@ namespace GameTemplate.Gameplay.UI
             _SceneService = sceneLoader;
             _soundService = soundService;
 
-            ContinueButton.interactable = !UserPrefs.IsFirstPlay();
+            ContinueButton.interactable = !UserPrefs.IsFirstPlay;
         }
 
         public void PlayButtonClick()
         {
-            if (!UserPrefs.IsFirstPlay())
+            if (!UserPrefs.IsFirstPlay)
             {
                 ConfirmPanel.SetActive(true);
                 return;
             }
 
-            //UserPrefs.SetFirstPlayFalse();
-            UserPrefs.SetLevelDuration(180);
-
-            LoadLevelScene();
+            UserPrefs.IsFirstPlay = false;
+            LoadGameScene();
         }
 
         public void ContinueButtonClick()
         {
-            LoadLevelScene();
+            LoadGameScene();
         }
 
         public void StartOverClick()
@@ -52,7 +50,7 @@ namespace GameTemplate.Gameplay.UI
             PlayButtonClick();
         }
 
-        public void LoadLevelScene()
+        public void LoadGameScene()
         {
             _SceneService.LoadScene(new SceneLoadData
             {

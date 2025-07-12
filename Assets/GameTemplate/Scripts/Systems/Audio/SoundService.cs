@@ -18,7 +18,6 @@ namespace GameTemplate.Systems.Audio
         
         AudioDataSO _audioDataSo;
         private Transform _Holder;
-        float _musicVolume;
 
         [Inject]
         public void Construct(AudioDataSO audioDataSo)
@@ -31,6 +30,7 @@ namespace GameTemplate.Systems.Audio
                 var clone = Object.Instantiate(_audioDataSo.audioObject);
                 clone.name = "Music";
                 _MusicSource = clone.GetComponent<AudioSource>();
+                _MusicSource.volume = UserPrefs.MusicVolume; 
                 Object.DontDestroyOnLoad(_MusicSource.gameObject);
             }
             
@@ -39,22 +39,8 @@ namespace GameTemplate.Systems.Audio
                 var clone = Object.Instantiate(_audioDataSo.audioObject);
                 clone.name = "Effects";
                 _EffectSource = clone.GetComponent<AudioSource>();
+                _EffectSource.volume = UserPrefs.EffectVolume; 
                 Object.DontDestroyOnLoad(_EffectSource.gameObject);
-            }
-            
-            _musicVolume = _MusicSource.volume;
-            UISettingsPanel.OnMusicStateChanged += OnMusicStateChanged;
-        }
-
-        private void OnMusicStateChanged(bool state)
-        {
-            if (state)
-            {
-                StartMenuThemeMusic(false);
-            }
-            else
-            {
-                StopThemeMusic();
             }
         }
 
@@ -66,23 +52,6 @@ namespace GameTemplate.Systems.Audio
         {
             AudioClip firstClip = _audioDataSo.GetMusicPlayerMusics(orderId);
             PlayTrack(firstClip, true, true);
-        }
-
-        public void ChangeGameThemeState(int orderId)
-        {
-            if (_MusicSource.isPlaying)
-            {
-                StopThemeMusic();
-            }
-            else
-            {
-                StartGameThemeMusic(orderId);
-            }
-        }
-        
-        public void StopThemeMusic()
-        {
-            StopTrack();
         }
 
         public void PlayWinSound()
@@ -97,8 +66,6 @@ namespace GameTemplate.Systems.Audio
 
         private void PlaySound(AudioClip clip)
         {
-            if (!UserPrefs.GetSoundState()) return;
-            
             if (_EffectSource == null)
             {
                 Debug.LogError("Effect source is null!");
@@ -110,8 +77,6 @@ namespace GameTemplate.Systems.Audio
 
         private void PlayTrack(AudioClip clip, bool looping, bool restart)
         {
-            if (!UserPrefs.GetMusicState()) return;
-            
             if (_MusicSource == null)
             {
                 Debug.LogError("Music source is null!");
@@ -127,22 +92,21 @@ namespace GameTemplate.Systems.Audio
 
                 _MusicSource.Stop();
             }
-            Debug.Log("play track");
 
-            _MusicSource.volume = _musicVolume;
             _MusicSource.clip = clip;
             _MusicSource.loop = looping;
             _MusicSource.time = 0;
             _MusicSource.Play();
         }
 
-        private void StopTrack()
+        public void SetMusicVolume(float volume)
         {
-            _MusicSource.DOFade(0, 1).OnComplete(() =>
-            {
-                _MusicSource.Stop();
-                _MusicSource.volume = _musicVolume;
-            });
+            _MusicSource.volume = volume;
+        }
+        
+        public void SetEffectsVolume(float volume)
+        {
+            _EffectSource.volume = volume;
         }
     }
 }

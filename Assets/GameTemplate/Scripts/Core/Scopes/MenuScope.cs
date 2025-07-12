@@ -1,6 +1,8 @@
 using GameTemplate.Scripts.Systems.Settings;
+using GameTemplate.Systems.Audio;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace GameTemplate.Core.Scopes
 {
@@ -24,7 +26,11 @@ namespace GameTemplate.Core.Scopes
         protected override void Start()
         {
             base.Start();
-            var model = new SettingsModel(settingsSO);
+            
+            // Resolve SoundService from container
+            var soundService = Container.Resolve<SoundService>();
+            
+            var model = new SettingsModel(settingsSO, soundService);
             var controller = new SettingsController(model, settingsView);
             controller.Initialize();
         }

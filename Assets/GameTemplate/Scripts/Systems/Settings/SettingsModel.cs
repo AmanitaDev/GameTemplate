@@ -1,5 +1,8 @@
 using GameTemplate.Scripts.Systems.MVC;
+using GameTemplate.Systems.Audio;
+using GameTemplate.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace GameTemplate.Scripts.Systems.Settings
 {
@@ -12,60 +15,65 @@ namespace GameTemplate.Scripts.Systems.Settings
         public bool UseVSync { get; private set; }
         public int QualityLevel { get; private set; }
 
-        private readonly GameSettingsSO config;
+        GameSettingsSO _config;
+        SoundService _soundService;
 
-        public SettingsModel(GameSettingsSO config)
+        public SettingsModel(GameSettingsSO gameSettingsSo, SoundService soundService)
         {
-            this.config = config;
+            _config = gameSettingsSo;
+            Debug.LogError("Constructing settings model");
+            _soundService = soundService;
         }
 
         public override void Initialize()
         {
-            MusicVolume = PlayerPrefs.GetFloat("MusicVolume", config.defaultMusicVolume);
-            EffectsVolume = PlayerPrefs.GetFloat("EffectsVolume", config.defaultEffectVolume);
-            ResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", config.defaultResolutionIndex);
-            IsFullscreen = PlayerPrefs.GetInt("Fullscreen", config.defaultFullscreen ? 1 : 0) == 1;
-            UseVSync = PlayerPrefs.GetInt("VSync", config.defaultVSync ? 1 : 0) == 1;
-            QualityLevel = PlayerPrefs.GetInt("QualityLevel", config.defaultQualityLevel);
+            MusicVolume = UserPrefs.MusicVolume;
+            EffectsVolume = UserPrefs.EffectVolume;
+            ResolutionIndex = UserPrefs.ResolutionIndex;
+            IsFullscreen = UserPrefs.IsFullscreen;
+            UseVSync = UserPrefs.UseVSync;
+            QualityLevel = UserPrefs.QualityLevel;
         }
 
         public void SetMusicVolume(float volume)
         {
             MusicVolume = volume;
-            PlayerPrefs.SetFloat("MusicVolume", volume);
+            _soundService.SetMusicVolume(volume);
+            UserPrefs.MusicVolume = volume;
         }
-        
+
         public void SetEffectsVolume(float volume)
         {
             EffectsVolume = volume;
-            PlayerPrefs.SetFloat("EffectsVolume", volume);
+            _soundService.SetEffectsVolume(volume);
+            UserPrefs.EffectVolume = volume;
         }
-        
+
         public void SetQuality(int level)
         {
             QualityLevel = level;
             QualitySettings.SetQualityLevel(level);
-            PlayerPrefs.SetInt("QualityLevel", level);
+            UserPrefs.QualityLevel = level;
         }
 
         public void SetResolution(int index)
         {
             ResolutionIndex = index;
-            PlayerPrefs.SetInt("ResolutionIndex", index);
+            UserPrefs.ResolutionIndex = index;
         }
 
         public void SetFullscreen(bool isFullscreen)
         {
             IsFullscreen = isFullscreen;
             Screen.fullScreen = isFullscreen;
-            PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
+            UserPrefs.IsFullscreen = isFullscreen;
         }
 
         public void SetVSync(bool vsync)
         {
             UseVSync = vsync;
             QualitySettings.vSyncCount = vsync ? 1 : 0;
-            PlayerPrefs.SetInt("VSync", vsync ? 1 : 0);
+            UserPrefs.UseVSync = vsync;
         }
     }
 }

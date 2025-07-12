@@ -2692,6 +2692,12 @@ PrefabInstance:
       objectReference: {fileID: 801508768}
     - target: {fileID: 6977151268681041748, guid: 12187630713931b46ad96ee291e39cfa,
         type: 3}
+      propertyPath: gameSettingsSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 72b9fc0470e6d364c9c07f23390abe03,
+        type: 2}
+    - target: {fileID: 6977151268681041748, guid: 12187630713931b46ad96ee291e39cfa,
+        type: 3}
       propertyPath: parentReference.TypeName
       value: GameTemplate.Core.Scopes.ApplicationScope
       objectReference: {fileID: 0}
