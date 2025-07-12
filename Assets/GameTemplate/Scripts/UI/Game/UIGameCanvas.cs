@@ -1,8 +1,5 @@
 using DG.Tweening;
-using GameTemplate.Core.Scopes;
-using GameTemplate.Systems.Level;
 using GameTemplate.Systems.Scene;
-using GameTemplate.Utils;
 using UnityEngine;
 using VContainer;
 
@@ -13,14 +10,12 @@ namespace GameTemplate.UI
         [SerializeField]
         private GameObject TopPanel, WinPanel, LosePanel;
 
-        private LevelService _levelService;
         ISceneService _SceneService;
 
         [Inject]
-        public void Construct(LevelService LevelService, ISceneService SceneService)
+        public void Construct(ISceneService SceneService)
         {
             Debug.Log("Construct UIGameCanvas");
-            _levelService = LevelService;
             _SceneService = SceneService;
         }
 
@@ -38,9 +33,9 @@ namespace GameTemplate.UI
             }
         }
         
-        public void GameFinished(WinState gameWon)
+        public void GameFinished(bool gameWon)
         {
-            if (gameWon == WinState.Win)
+            if (gameWon)
             {
                 OpenPanel(WinPanel.GetComponent<CanvasGroup>());
             }
@@ -59,7 +54,6 @@ namespace GameTemplate.UI
 
         public void EndTheDayClick()
         {
-            _levelService.SetNextLevel();
             _SceneService.LoadScene(new SceneLoadData
             {
                 sceneName = "Upgrades",

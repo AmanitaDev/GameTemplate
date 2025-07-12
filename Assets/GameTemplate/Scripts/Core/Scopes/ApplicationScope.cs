@@ -1,12 +1,9 @@
 using UnityEngine;
 using GameTemplate.Systems.Audio;
-using GameTemplate.Systems.Currencies;
-using GameTemplate.Systems.FloatingText;
-using GameTemplate.Systems.Level;
 using GameTemplate.Systems.Pooling;
 using GameTemplate.Systems.Scene;
 using GameTemplate.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -17,32 +14,22 @@ namespace GameTemplate.Core.Scopes
     /// </summary>
     public class ApplicationScope : LifetimeScope
     {
-        public AudioData audioData;
-        public CurrencyData currencyData;
+        [FormerlySerializedAs("audioData")] public AudioDataSO audioDataSo;
         public SceneData sceneData;
-        public LevelDataHolder levelData;
         public PoolingData poolingData;
 
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
 
-            builder.RegisterInstance(audioData);
-            builder.RegisterInstance(currencyData);
+            builder.RegisterInstance(audioDataSo);
             builder.RegisterInstance(sceneData);
-            builder.RegisterInstance(levelData);
             builder.RegisterInstance(poolingData);
 
-            builder.Register<CurrencyService>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<SoundService>(Lifetime.Singleton);
-            builder.Register<LevelService>(Lifetime.Singleton);
             builder.Register<PoolingService>(Lifetime.Singleton);
-            builder.RegisterComponentInHierarchy<ApplicationCanvas>();
             builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
-            builder.Register<FloatingTextService>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.RegisterComponentInHierarchy<LoadingScreen>();
-
-            builder.Register<PersistentGameState>(Lifetime.Singleton);
+            builder.RegisterComponentInHierarchy<LoadingScreenController>();
         }
 
         public void Start()

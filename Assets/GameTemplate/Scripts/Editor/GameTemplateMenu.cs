@@ -1,6 +1,4 @@
 using GameTemplate.Systems.Audio;
-using GameTemplate.Systems.Currencies;
-using GameTemplate.Systems.Level;
 using GameTemplate.Systems.Pooling;
 
 #if UNITY_EDITOR
@@ -29,10 +27,8 @@ namespace GameTemplate.Scripts.Editor
             var tree = new OdinMenuTree();
             tree.AddAssetAtPath("Editor Game Settings", "Assets/Resources/EditorGameSettings.asset",
                 typeof(EditorGameSettings));
-            tree.AddAssetAtPath("Level Data Holder", "Assets/Resources/Data/LevelData.asset", typeof(LevelDataHolder));
-            tree.AddAssetAtPath("Currency Data", "Assets/Resources/Data/CurrencyData.asset", typeof(CurrencyData));
             tree.AddAssetAtPath("Pooling Data", "Assets/Resources/Data/PoolingData.asset", typeof(PoolingData));
-            tree.AddAssetAtPath("Audio Data", "Assets/Resources/Data/AudioData.asset", typeof(AudioData));
+            tree.AddAssetAtPath("Audio Data", "Assets/Resources/Data/AudioData.asset", typeof(AudioDataSO));
             return tree;
         }
     }

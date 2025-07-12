@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using GameTemplate.Systems.Audio;
-using GameTemplate.Systems.Currencies;
-using GameTemplate.Systems.Level;
 using GameTemplate.Systems.Scene;
-using GameTemplate.UI.Currency;
 using GameTemplate.Utils;
 using UnityEngine;
 using UnityEngine.UI;

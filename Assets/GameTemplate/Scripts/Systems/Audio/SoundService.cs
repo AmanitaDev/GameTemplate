@@ -16,19 +16,19 @@ namespace GameTemplate.Systems.Audio
         //use for effect sounds
         AudioSource _EffectSource;
         
-        AudioData _audioData;
+        AudioDataSO _audioDataSo;
         private Transform _Holder;
         float _musicVolume;
 
         [Inject]
-        public void Construct(AudioData audioData)
+        public void Construct(AudioDataSO audioDataSo)
         {
             Debug.Log("Construct SoundService");
-            _audioData = audioData;
+            _audioDataSo = audioDataSo;
             
             if (_MusicSource == null)
             {
-                var clone = Object.Instantiate(_audioData.audioObject);
+                var clone = Object.Instantiate(_audioDataSo.audioObject);
                 clone.name = "Music";
                 _MusicSource = clone.GetComponent<AudioSource>();
                 Object.DontDestroyOnLoad(_MusicSource.gameObject);
@@ -36,7 +36,7 @@ namespace GameTemplate.Systems.Audio
             
             if (_EffectSource == null)
             {
-                var clone = Object.Instantiate(_audioData.audioObject);
+                var clone = Object.Instantiate(_audioDataSo.audioObject);
                 clone.name = "Effects";
                 _EffectSource = clone.GetComponent<AudioSource>();
                 Object.DontDestroyOnLoad(_EffectSource.gameObject);
@@ -60,11 +60,11 @@ namespace GameTemplate.Systems.Audio
 
         public void StartMenuThemeMusic(bool restart)
         {
-            PlayTrack(_audioData.GetAudio(AudioID.MenuMusic), true, restart);
+            PlayTrack(_audioDataSo.GetAudio(AudioID.MenuMusic), true, restart);
         }
         public void StartGameThemeMusic(int orderId)
         {
-            AudioClip firstClip = _audioData.GetMusicPlayerMusics(orderId);
+            AudioClip firstClip = _audioDataSo.GetMusicPlayerMusics(orderId);
             PlayTrack(firstClip, true, true);
         }
 
@@ -87,12 +87,12 @@ namespace GameTemplate.Systems.Audio
 
         public void PlayWinSound()
         {
-            PlaySound(_audioData.GetAudio(AudioID.Win));
+            PlaySound(_audioDataSo.GetAudio(AudioID.Win));
         }
 
         public void PlayLoseSound()
         {
-            PlaySound(_audioData.GetAudio(AudioID.Lose));
+            PlaySound(_audioDataSo.GetAudio(AudioID.Lose));
         }
 
         private void PlaySound(AudioClip clip)

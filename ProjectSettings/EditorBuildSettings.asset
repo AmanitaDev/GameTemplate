@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GameTemplate/Scenes/PersistentScene.unity
+    path: Assets/GameTemplate/Scenes/Bootstrap.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/GameTemplate/Scenes/MainMenu.unity
+    path: Assets/GameTemplate/Scenes/Menu.unity
     guid: 4503f4ae01df63741a401dbf96efa23e
   - enabled: 1
     path: Assets/GameTemplate/Scenes/Game.unity

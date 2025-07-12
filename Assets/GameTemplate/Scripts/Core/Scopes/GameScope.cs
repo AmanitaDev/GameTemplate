@@ -1,8 +1,6 @@
 using AssetKits.ParticleImage;
 using Cysharp.Threading.Tasks;
 using GameTemplate.Systems.Audio;
-using GameTemplate.Systems.Currencies;
-using GameTemplate.Systems.Level;
 using GameTemplate.Systems.Scene;
 using GameTemplate.UI;
 using UnityEngine;
@@ -19,16 +17,12 @@ namespace GameTemplate.Core.Scopes
 
         [SerializeField] private Transform _levelPrefabParent;
         [SerializeField] private UIGameCanvas _uiGameCanvas;
-        [SerializeField] private EarningsUI _earningsUI;
         [SerializeField] private ParticleImage _winParticleImage;
 
         // Wait time constants for switching to post game after the game is won or lost
         private const float k_WinDelay = 2.0f;
         private const float k_LoseDelay = 2.0f;
 
-        [Inject] PersistentGameState m_PersistentGameState;
-        [Inject] LevelService _levelService;
-        [Inject] ICurrencyService _currencyManager;
         [Inject] ISceneService _SceneService;
         [Inject] SoundService _soundService;
 
@@ -37,13 +31,7 @@ namespace GameTemplate.Core.Scopes
         {
             base.Start();
 
-            m_PersistentGameState.Reset();
             //Do some things here
-            _levelService.SpawnLevel(_levelPrefabParent);
-
-            //_uiGameCanvas.Initialize(_levelService.UILevelId);
-
-            LevelPrefab.OnGameFinished += OnGameFinished;
         }
 
         protected override void Configure(IContainerBuilder builder)
@@ -56,7 +44,6 @@ namespace GameTemplate.Core.Scopes
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            LevelPrefab.OnGameFinished -= OnGameFinished;
         }
 
         public void OnGameFinished(bool isWin)
@@ -67,7 +54,6 @@ namespace GameTemplate.Core.Scopes
 
         async UniTaskVoid CoroGameOver(float wait, bool gameWon)
         {
-            m_PersistentGameState.SetWinState(gameWon ? WinState.Win : WinState.Loss);
             if (gameWon) _winParticleImage.Play();
 
             //TODO change this game to game
@@ -75,11 +61,9 @@ namespace GameTemplate.Core.Scopes
             await UniTask.Delay((int)(wait * 1000)); // waits for wait*1 second
 
             //win or lose canvas should open
-            CurrencyArgs args = _earningsUI.SetEarnings();
-            _currencyManager.EarnCurrency(args);
-            _uiGameCanvas.GameFinished(m_PersistentGameState.WinState);
+            _uiGameCanvas.GameFinished(gameWon);
 
-            if (m_PersistentGameState.WinState == WinState.Win)
+            if (gameWon)
             {
                 _soundService.PlayWinSound();
                 //_levelService.SetNextLevel();

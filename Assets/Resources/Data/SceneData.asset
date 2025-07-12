@@ -19,14 +19,14 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
-    sceneName: PersistentScene
+    sceneName: Bootstrap
   - scene:
       m_AssetGUID: 4503f4ae01df63741a401dbf96efa23e
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
-    sceneName: MainMenu
+    sceneName: Menu
   - scene:
       m_AssetGUID: c36a4eb67c178014594ef64d3870a34a
       m_SubObjectName: 
@@ -34,5 +34,5 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
     sceneName: Game
-  nameOfSceneToLoadOnOpening: MainMenu
+  nameOfSceneToLoadOnOpening: Menu
   nameOfSceneUIScene: 
