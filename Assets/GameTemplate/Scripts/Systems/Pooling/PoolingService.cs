@@ -10,9 +10,11 @@ namespace GameTemplate.Systems.Pooling
     {
         [HideInInspector] public Transform poolParent;
         PoolID testPoolId = 0;
-
+        
+        // we store pooled objects in this dictionary
+        private Dictionary<PoolID, Queue<GameObject>> objectPool = new Dictionary<PoolID, Queue<GameObject>>();
+        // wes store pool objects that parents changed in this dictionary. this way we can retrieve them back
         [SerializeField] private List<PoolElement> parentsChangedPoolObjects = new List<PoolElement>();
-        private Dictionary<PoolID, Queue<GameObject>> objectPools = new Dictionary<PoolID, Queue<GameObject>>();
 
         PoolingData _poolingDataData;
 
@@ -32,14 +34,14 @@ namespace GameTemplate.Systems.Pooling
             
             for (int i = 0; i < _poolingDataData.poolObjects.Length; i++)
             {
-                objectPools.Add((PoolID)i, new Queue<GameObject>());
+                objectPool.Add((PoolID)i, new Queue<GameObject>());
                 for (int z = 0; z < _poolingDataData.poolObjects[i].objectCount; z++)
                 {
                     GameObject newObject = Object.Instantiate(_poolingDataData.poolObjects[i].objectPrefab, poolParent);
                     newObject.SetActive(false);
                     newObject.GetComponent<PoolElement>()
                         .Initialize(_poolingDataData.poolObjects[i].goBackOnDisable, (PoolID)i);
-                    objectPools[(PoolID)i].Enqueue(newObject);
+                    objectPool[(PoolID)i].Enqueue(newObject);
                 }
             }
         }
@@ -67,7 +69,7 @@ namespace GameTemplate.Systems.Pooling
         public void GoBackToPool(GameObject poolObject)
         {
             poolObject.transform.SetParent(poolParent);
-            objectPools[poolObject.GetComponent<PoolElement>().PoolId].Enqueue(poolObject);
+            objectPool[poolObject.GetComponent<PoolElement>().PoolId].Enqueue(poolObject);
         }
 
         public GameObject GetParticleById(PoolID poolId, Transform referance)
@@ -112,14 +114,14 @@ namespace GameTemplate.Systems.Pooling
 
         public GameObject GetGameObjectById(PoolID poolId, Vector3 position, Quaternion rotation)
         {
-            if (!objectPools.ContainsKey(poolId))
+            if (!objectPool.ContainsKey(poolId))
             {
-                objectPools.Add(poolId, new Queue<GameObject>());
+                objectPool.Add(poolId, new Queue<GameObject>());
             }
 
-            if (objectPools[poolId].Count != 0)
+            if (objectPool[poolId].Count != 0)
             {
-                GameObject poolObject = objectPools[poolId].Dequeue();
+                GameObject poolObject = objectPool[poolId].Dequeue();
                 poolObject.transform.position = position;
                 poolObject.transform.rotation = rotation;
                 poolObject.SetActive(true);
@@ -143,14 +145,14 @@ namespace GameTemplate.Systems.Pooling
 
         public GameObject GetGameObjectById(PoolID poolId, Vector3 position, Quaternion rotation, Vector3 targetScale)
         {
-            if (!objectPools.ContainsKey(poolId))
+            if (!objectPool.ContainsKey(poolId))
             {
-                objectPools.Add(poolId, new Queue<GameObject>());
+                objectPool.Add(poolId, new Queue<GameObject>());
             }
 
-            if (objectPools[poolId].Count != 0)
+            if (objectPool[poolId].Count != 0)
             {
-                GameObject poolObject = objectPools[poolId].Dequeue();
+                GameObject poolObject = objectPool[poolId].Dequeue();
                 poolObject.transform.position = position;
                 poolObject.transform.rotation = rotation;
                 poolObject.transform.localScale = targetScale;
@@ -176,13 +178,13 @@ namespace GameTemplate.Systems.Pooling
 
         public void GoBackToPool(PoolElement elementToGoBackToPool)
         {
-            objectPools[elementToGoBackToPool.PoolId].Enqueue(elementToGoBackToPool.gameObject);
+            objectPool[elementToGoBackToPool.PoolId].Enqueue(elementToGoBackToPool.gameObject);
         }
 
         public void GoBackToPool(PoolID poolId, GameObject objectToAddPool)
         {
             objectToAddPool.SetActive(false);
-            objectPools[poolId].Enqueue(objectToAddPool);
+            objectPool[poolId].Enqueue(objectToAddPool);
         }
 
         public void PoolElementParentChanged(PoolElement parentChangedObject)

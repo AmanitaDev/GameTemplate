@@ -15,7 +15,6 @@ namespace GameTemplate.Core.Scopes
         public override bool Persists => false;
         public override GameState ActiveState => GameState.Game;
 
-        [SerializeField] private Transform _levelPrefabParent;
         [SerializeField] private UIGameCanvas _uiGameCanvas;
         [SerializeField] private ParticleImage _winParticleImage;
 
