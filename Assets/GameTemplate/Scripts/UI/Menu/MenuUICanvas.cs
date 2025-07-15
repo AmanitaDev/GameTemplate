@@ -15,14 +15,14 @@ namespace GameTemplate.Gameplay.UI
         [SerializeField] GameObject ConfirmPanel;
 
         ISceneService _SceneService;
-        SoundService _soundService;
+        AudioService _audioService;
         
         [Inject]
-        public void Construct(ISceneService sceneLoader, SoundService soundService)
+        public void Construct(ISceneService sceneLoader, AudioService audioService)
         {
             Debug.Log("Construct MenuUICanvas");
             _SceneService = sceneLoader;
-            _soundService = soundService;
+            _audioService = audioService;
 
             ContinueButton.interactable = !UserPrefs.IsFirstPlay;
         }

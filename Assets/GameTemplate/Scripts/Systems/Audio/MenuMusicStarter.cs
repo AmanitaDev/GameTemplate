@@ -6,19 +6,19 @@ namespace GameTemplate.Systems.Audio
     /// <summary>
     /// Simple class to play game theme on scene load
     /// </summary>
-    public class MainMenuMusicStarter : MonoBehaviour
+    public class MenuMusicStarter : MonoBehaviour
     {
         // set whether theme should restart if already playing
         [SerializeField]
         bool m_Restart;
         
-        SoundService _soundService;
+        AudioService _audioService;
 
         [Inject]
-        public void Construct(SoundService soundService)
+        public void Construct(AudioService audioService)
         {
-            _soundService = soundService;
-            _soundService.StartMenuThemeMusic(m_Restart);
+            _audioService = audioService;
+            _audioService.StartMenuThemeMusic(m_Restart);
         }
     }
 }

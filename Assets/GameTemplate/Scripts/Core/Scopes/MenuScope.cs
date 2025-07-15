@@ -28,7 +28,7 @@ namespace GameTemplate.Core.Scopes
             base.Start();
             
             // Resolve SoundService from container
-            var soundService = Container.Resolve<SoundService>();
+            var soundService = Container.Resolve<AudioService>();
             
             var model = new SettingsModel(settingsSO, soundService);
             var controller = new SettingsController(model, settingsView);

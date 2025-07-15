@@ -168,10 +168,8 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  audioData: {fileID: 11400000, guid: a2760422684c8254e856727faf75e488, type: 2}
-  currencyData: {fileID: 11400000, guid: 54da86420d9098843a0e6d71182fcff8, type: 2}
+  audioDataSo: {fileID: 11400000, guid: a2760422684c8254e856727faf75e488, type: 2}
   sceneData: {fileID: 11400000, guid: c6f8dc7ead0552a4a9e71a960f5a90d2, type: 2}
-  levelData: {fileID: 11400000, guid: f2a32ec78bd7f6d4c84819b8768e0eea, type: 2}
   poolingData: {fileID: 11400000, guid: 30a9fa7922dfa474f9edaa76281c1a60, type: 2}
 --- !u!1001 &1610112824040321042
 PrefabInstance:

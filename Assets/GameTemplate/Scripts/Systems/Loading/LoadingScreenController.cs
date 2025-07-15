@@ -4,7 +4,7 @@ using GameTemplate.Systems.Scene;
 using UnityEngine;
 using VContainer;
 
-namespace GameTemplate.UI
+namespace GameTemplate.Scripts.Systems.Loading
 {
     public class LoadingScreenController : MonoBehaviour
     {

@@ -5,6 +5,7 @@ namespace GameTemplate.Scripts.Systems.MVC
     public abstract class BaseView : MonoBehaviour, IMVCView
     {
         [SerializeField] private bool isOpenByDefault = true;
+        // use this on unity inspector
         public bool IsOpenByDefault => isOpenByDefault;
 
         public virtual void Show()

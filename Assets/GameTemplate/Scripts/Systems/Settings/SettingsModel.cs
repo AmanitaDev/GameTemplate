@@ -16,13 +16,13 @@ namespace GameTemplate.Scripts.Systems.Settings
         public int QualityLevel { get; private set; }
 
         GameSettingsSO _config;
-        SoundService _soundService;
+        AudioService _audioService;
 
-        public SettingsModel(GameSettingsSO gameSettingsSo, SoundService soundService)
+        public SettingsModel(GameSettingsSO gameSettingsSo, AudioService audioService)
         {
             _config = gameSettingsSo;
             Debug.LogError("Constructing settings model");
-            _soundService = soundService;
+            _audioService = audioService;
         }
 
         public override void Initialize()
@@ -38,14 +38,14 @@ namespace GameTemplate.Scripts.Systems.Settings
         public void SetMusicVolume(float volume)
         {
             MusicVolume = volume;
-            _soundService.SetMusicVolume(volume);
+            _audioService.SetMusicSourceVolume(volume);
             UserPrefs.MusicVolume = volume;
         }
 
         public void SetEffectsVolume(float volume)
         {
             EffectsVolume = volume;
-            _soundService.SetEffectsVolume(volume);
+            _audioService.SetEffectsSourceVolume(volume);
             UserPrefs.EffectVolume = volume;
         }
 

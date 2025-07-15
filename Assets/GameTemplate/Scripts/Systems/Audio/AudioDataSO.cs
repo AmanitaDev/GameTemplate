@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace GameTemplate.Systems.Audio
 {
@@ -8,20 +9,14 @@ namespace GameTemplate.Systems.Audio
     public class AudioDataSO : SerializedScriptableObject
     {
         public GameObject audioObject;
+        public AudioMixer audioMixer;
 
         [DictionaryDrawerSettings(KeyLabel = "AudioID", ValueLabel = "AudioClip")]
         public Dictionary<AudioID, AudioClip> AudioClips = new Dictionary<AudioID, AudioClip>();
 
-        public List<AudioClip> MusicPlayerMusics = new List<AudioClip>();
-
         public AudioClip GetAudio(AudioID timesUp)
         {
             return AudioClips[timesUp];
-        }
-
-        public AudioClip GetMusicPlayerMusics(int orderId)
-        {
-            return MusicPlayerMusics[orderId];
         }
     }
 }

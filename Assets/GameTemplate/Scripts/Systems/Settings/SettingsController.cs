@@ -19,7 +19,7 @@ namespace GameTemplate.Scripts.Systems.Settings
             List<string> resolutionOptions = new List<string>();
             foreach (var resolution in Screen.resolutions.Reverse())
             {
-                resolutionOptions.Add($"{resolution.width}x{resolution.height}");
+                resolutionOptions.Add($"{resolution.width}x{resolution.height} - {resolution.refreshRate}hz");
             }
             view.ResolutionDropdown.AddOptions(resolutionOptions);
             int id = Screen.resolutions.Select((item, i) => new { Item = item, Index = i })
@@ -32,9 +32,7 @@ namespace GameTemplate.Scripts.Systems.Settings
             view.FullscreenToggle.onValueChanged.AddListener(model.SetFullscreen);
             view.VSyncToggle.onValueChanged.AddListener(model.SetVSync);
             view.QualityDropdown.onValueChanged.AddListener(model.SetQuality);
-
-            //TODO
-            //AudioListener.volume = model.MasterVolume;
+            
             Screen.SetResolution(Screen.resolutions[model.ResolutionIndex].width, Screen.resolutions[model.ResolutionIndex].height, model.IsFullscreen);
             QualitySettings.SetQualityLevel(model.QualityLevel);
         }

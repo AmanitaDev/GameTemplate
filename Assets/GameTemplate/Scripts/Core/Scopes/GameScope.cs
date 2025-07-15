@@ -24,7 +24,7 @@ namespace GameTemplate.Core.Scopes
         private const float k_LoseDelay = 2.0f;
 
         [Inject] ISceneService _SceneService;
-        [Inject] SoundService _soundService;
+        [Inject] AudioService _audioService;
 
 
         protected override void Start()
@@ -65,12 +65,12 @@ namespace GameTemplate.Core.Scopes
 
             if (gameWon)
             {
-                _soundService.PlayWinSound();
+                _audioService.PlaySFX(AudioID.Win);
                 //_levelService.SetNextLevel();
             }
             else
             {
-                _soundService.PlayLoseSound();
+                _audioService.PlaySFX(AudioID.Lose);
             }
         }
 

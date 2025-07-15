@@ -1,8 +1,8 @@
+using GameTemplate.Scripts.Systems.Loading;
 using UnityEngine;
 using GameTemplate.Systems.Audio;
 using GameTemplate.Systems.Pooling;
 using GameTemplate.Systems.Scene;
-using GameTemplate.UI;
 using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
@@ -26,7 +26,7 @@ namespace GameTemplate.Core.Scopes
             builder.RegisterInstance(sceneData);
             builder.RegisterInstance(poolingData);
 
-            builder.Register<SoundService>(Lifetime.Singleton);
+            builder.Register<AudioService>(Lifetime.Singleton);
             builder.Register<PoolingService>(Lifetime.Singleton);
             builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
             builder.RegisterComponentInHierarchy<LoadingScreenController>();
