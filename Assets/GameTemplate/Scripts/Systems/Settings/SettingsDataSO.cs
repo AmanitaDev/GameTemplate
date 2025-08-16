@@ -3,7 +3,7 @@ using UnityEngine;
 namespace GameTemplate.Scripts.Systems.Settings
 {
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Scriptable Objects/Game Settings", order = 0)]
-    public class GameSettingsSO : ScriptableObject
+    public class SettingsDataSO : ScriptableObject
     {
         public float defaultMusicVolume = 0.8f;
         public float defaultEffectVolume = 0.8f;

@@ -23,8 +23,21 @@ namespace GameTemplate.Scripts.Systems.Scene
         {
             Debug.Log("Construct SceneService");
             _dataSo = dataSo;
-            
+
             Debug.LogError("Initialize SceneService");
+
+            /*LoadScene(new SceneLoadData
+            {
+                sceneName = _data.nameOfSceneUIScene
+            });*/
+        }
+
+        public void Start()
+        {
+        }
+
+        public void LoadMenuScene()
+        {
             LoadScene(new SceneLoadData
             {
                 sceneName = _dataSo.nameOfSceneToLoadOnOpening,
@@ -32,16 +45,6 @@ namespace GameTemplate.Scripts.Systems.Scene
                 activateLoadingCanvas = true,
                 setActiveScene = true
             });
-            
-            /*LoadScene(new SceneLoadData
-            {
-                sceneName = _data.nameOfSceneUIScene
-            });*/
-        }
-        
-        public void Start()
-        {
-            
         }
 
         public async void LoadScene(SceneLoadData sceneLoadData)

@@ -7,7 +7,7 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
     public class EscapeMenuController : MonoBehaviour
     {
         public EscapeMenuView view;
-        private EscapeMenuPresenter presenter;
+        private EscapeMenuMoel _moel;
         
         private Controls _controls;
 
@@ -17,12 +17,12 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
             _controls = controls;
             _controls.Enable();
             
-            _controls.UI.Cancel.performed += ctx => presenter.ToggleMenu();
+            _controls.UI.Cancel.performed += ctx => _moel.ToggleMenu();
         }
 
         private void Awake()
         {
-            presenter = new EscapeMenuPresenter(view);
+            _moel = new EscapeMenuMoel(view);
         }
     }
 }

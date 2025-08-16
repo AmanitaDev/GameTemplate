@@ -7,72 +7,80 @@ namespace GameTemplate.Scripts.Systems.Settings
 {
     public class SettingsModel : BaseModel
     {
-        public float MusicVolume { get; private set; }
-        public float EffectsVolume { get; private set; }
-        public int ResolutionIndex { get; private set; }
-        public bool IsFullscreen { get; private set; }
-        public bool UseVSync { get; private set; }
-        public int QualityLevel { get; private set; }
-
-        GameSettingsSO _config;
-        AudioService _audioService;
-
-        public SettingsModel(GameSettingsSO gameSettingsSo, AudioService audioService)
+        public float MusicVolume
         {
-            _config = gameSettingsSo;
-            Debug.LogError("Constructing settings model");
-            _audioService = audioService;
+            get => UserPrefs.MusicVolume;
+            private set => UserPrefs.MusicVolume = value;
+        }
+        
+        public float EffectsVolume { 
+            get => UserPrefs.EffectVolume;
+            private set => UserPrefs.EffectVolume = value;
+        }
+        
+        public int ResolutionIndex { 
+            get => UserPrefs.ResolutionIndex;
+            private set => UserPrefs.ResolutionIndex = value;
+        }
+        
+        public bool IsFullscreen { 
+            get => UserPrefs.IsFullscreen;
+            private set => UserPrefs.IsFullscreen = value;
+        }
+        
+        public bool UseVSync { 
+            get => UserPrefs.UseVSync;
+            private set => UserPrefs.UseVSync = value;
+        }
+        
+        public int QualityLevel { 
+            get => UserPrefs.QualityLevel;
+            private set => UserPrefs.QualityLevel = value;
         }
 
-        public override void Initialize()
+        SettingsDataSO _settingsDataSo;
+        AudioService _audioService;
+
+        public SettingsModel(SettingsDataSO settingsDataSo, AudioService audioService)
         {
-            MusicVolume = UserPrefs.MusicVolume;
-            EffectsVolume = UserPrefs.EffectVolume;
-            ResolutionIndex = UserPrefs.ResolutionIndex;
-            IsFullscreen = UserPrefs.IsFullscreen;
-            UseVSync = UserPrefs.UseVSync;
-            QualityLevel = UserPrefs.QualityLevel;
+            _settingsDataSo = settingsDataSo;
+            Debug.LogError("Constructing settings model");
+            _audioService = audioService;
         }
 
         public void SetMusicVolume(float volume)
         {
             MusicVolume = volume;
             _audioService.SetMusicSourceVolume(volume);
-            UserPrefs.MusicVolume = volume;
         }
 
         public void SetEffectsVolume(float volume)
         {
             EffectsVolume = volume;
             _audioService.SetEffectsSourceVolume(volume);
-            UserPrefs.EffectVolume = volume;
         }
 
         public void SetQuality(int level)
         {
             QualityLevel = level;
             QualitySettings.SetQualityLevel(level);
-            UserPrefs.QualityLevel = level;
         }
 
         public void SetResolution(int index)
         {
             ResolutionIndex = index;
-            UserPrefs.ResolutionIndex = index;
         }
 
         public void SetFullscreen(bool isFullscreen)
         {
             IsFullscreen = isFullscreen;
             Screen.fullScreen = isFullscreen;
-            UserPrefs.IsFullscreen = isFullscreen;
         }
 
         public void SetVSync(bool vsync)
         {
             UseVSync = vsync;
             QualitySettings.vSyncCount = vsync ? 1 : 0;
-            UserPrefs.UseVSync = vsync;
         }
     }
 }

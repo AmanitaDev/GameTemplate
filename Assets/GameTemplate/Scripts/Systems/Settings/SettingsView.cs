@@ -30,5 +30,7 @@ namespace GameTemplate.Scripts.Systems.Settings
             fullscreenToggle.isOn = model.IsFullscreen;
             vsyncToggle.isOn = model.UseVSync;
         }
+        
+        
     }
 }

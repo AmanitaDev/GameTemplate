@@ -2,13 +2,13 @@ using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Input;
 using GameTemplate.Scripts.Systems.Loading;
 using GameTemplate.Scripts.Systems.Scene;
-using UnityEngine;
 using GameTemplate.Systems.Audio;
 using GameTemplate.Systems.Pooling;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameTemplate.Core.Scopes
+namespace GameTemplate.Scripts.Core.Scopes
 {
     /// <summary>
     /// An entry point to the application, where we bind all the common dependencies to the root DI scope.
@@ -34,6 +34,18 @@ namespace GameTemplate.Core.Scopes
             
             // Register the generated Controls class as a singleton
             builder.Register<Controls>(Lifetime.Singleton).AsSelf();
+        }
+
+        protected override async void Awake()
+        {
+            base.Awake();
+            
+            // Ensure SoundService is ready before Main Menu
+            var audioService = Container.Resolve<AudioService>();
+            await audioService.InitializeAsync();
+            
+            var sceneService = Container.Resolve<ISceneService>();
+            sceneService.LoadMenuScene();
         }
 
         public void Start()

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: GameTemplate.Core.Scopes.ApplicationScope
+    TypeName: GameTemplate.Scripts.Core.Scopes.ApplicationScope
   autoRun: 1
   autoInjectGameObjects: []
   uiGameCanvas: {fileID: 0}

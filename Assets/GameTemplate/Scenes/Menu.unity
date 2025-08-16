@@ -1534,7 +1534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6b76921ef34363bc7d1685854248ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Restart: 1
+  restart: 1
 --- !u!4 &1304466544
 Transform:
   m_ObjectHideFlags: 0
@@ -2693,6 +2693,12 @@ PrefabInstance:
     - target: {fileID: 6977151268681041748, guid: 12187630713931b46ad96ee291e39cfa,
         type: 3}
       propertyPath: gameSettingsSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 72b9fc0470e6d364c9c07f23390abe03,
+        type: 2}
+    - target: {fileID: 6977151268681041748, guid: 12187630713931b46ad96ee291e39cfa,
+        type: 3}
+      propertyPath: settingsDataSo
       value: 
       objectReference: {fileID: 11400000, guid: 72b9fc0470e6d364c9c07f23390abe03,
         type: 2}

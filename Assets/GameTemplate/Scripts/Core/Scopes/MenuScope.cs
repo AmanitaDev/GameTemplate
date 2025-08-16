@@ -1,3 +1,4 @@
+using GameTemplate.Scripts.Systems.MVC;
 using GameTemplate.Scripts.Systems.Settings;
 using GameTemplate.Systems.Audio;
 using UnityEngine;
@@ -15,25 +16,25 @@ namespace GameTemplate.Core.Scopes
     {
         public override bool Persists => false;
         public override GameState ActiveState => GameState.MainMenu;
-        
-        [SerializeField] private GameSettingsSO settingsSo;
-        [SerializeField] private SettingsView settingsView;
+
+        [SerializeField] private SettingsDataSO settingsDataSo;
 
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
+
+            builder.RegisterInstance(settingsDataSo);
+
+            builder.Register<SettingsModel>(Lifetime.Singleton).AsSelf();
+            builder.RegisterComponentInHierarchy<SettingsView>();
+            builder.Register<SettingsController>(Lifetime.Singleton).AsSelf();
         }
 
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
-            
-            // Resolve SoundService from container
-            var soundService = Container.Resolve<AudioService>();
-            
-            var model = new SettingsModel(settingsSo, soundService);
-            var controller = new SettingsController(model, settingsView);
-            controller.Initialize();
+            base.Awake();
+            var settingsController = Container.Resolve<SettingsController>();
+            settingsController.Initialize();
         }
 
         protected override void OnDestroy()

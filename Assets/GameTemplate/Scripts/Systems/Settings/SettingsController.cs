@@ -7,33 +7,36 @@ namespace GameTemplate.Scripts.Systems.Settings
 {
     public class SettingsController : BaseController<SettingsModel, SettingsView>
     {
-        public SettingsController(SettingsModel model, SettingsView view) : base(model, view) { }
-        
         public override void Initialize()
         {
             base.Initialize();
+            Debug.Log("Initialized SettingsController");
 
-            view.SetInitialValues(model);
-            
+            // Initialize view
+            View.SetInitialValues(Model);
+
             List<string> resolutionOptions = new List<string>();
             foreach (var resolution in Screen.resolutions.Reverse())
             {
                 resolutionOptions.Add($"{resolution.width}x{resolution.height} - {resolution.refreshRate}hz");
             }
-            view.ResolutionDropdown.AddOptions(resolutionOptions);
+
+            View.ResolutionDropdown.AddOptions(resolutionOptions);
             int id = Screen.resolutions.Select((item, i) => new { Item = item, Index = i })
                 .First(x => x.Item is { width: 1920, height: 1080 }).Index;
-            model.SetResolution(id);
+            Model.SetResolution(id);
 
-            view.MusicSlider.onValueChanged.AddListener(model.SetMusicVolume);
-            view.EffectsSlider.onValueChanged.AddListener(model.SetEffectsVolume);
-            view.ResolutionDropdown.onValueChanged.AddListener(model.SetResolution);
-            view.FullscreenToggle.onValueChanged.AddListener(model.SetFullscreen);
-            view.VSyncToggle.onValueChanged.AddListener(model.SetVSync);
-            view.QualityDropdown.onValueChanged.AddListener(model.SetQuality);
-            
-            Screen.SetResolution(Screen.resolutions[model.ResolutionIndex].width, Screen.resolutions[model.ResolutionIndex].height, model.IsFullscreen);
-            QualitySettings.SetQualityLevel(model.QualityLevel);
+            // Bind buttons
+            View.MusicSlider.onValueChanged.AddListener(Model.SetMusicVolume);
+            View.EffectsSlider.onValueChanged.AddListener(Model.SetEffectsVolume);
+            View.ResolutionDropdown.onValueChanged.AddListener(Model.SetResolution);
+            View.FullscreenToggle.onValueChanged.AddListener(Model.SetFullscreen);
+            View.VSyncToggle.onValueChanged.AddListener(Model.SetVSync);
+            View.QualityDropdown.onValueChanged.AddListener(Model.SetQuality);
+
+            Screen.SetResolution(Screen.resolutions[Model.ResolutionIndex].width,
+                Screen.resolutions[Model.ResolutionIndex].height, Model.IsFullscreen);
+            QualitySettings.SetQualityLevel(Model.QualityLevel);
         }
     }
 }

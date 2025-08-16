@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: GameTemplate.Core.Scopes.ApplicationScope
+    TypeName: GameTemplate.Scripts.Core.Scopes.ApplicationScope
   autoRun: 1
   autoInjectGameObjects: []
-  settingsSo: {fileID: 11400000, guid: 72b9fc0470e6d364c9c07f23390abe03, type: 2}
+  settingsData: {fileID: 11400000, guid: 72b9fc0470e6d364c9c07f23390abe03, type: 2}
   settingsView: {fileID: 0}

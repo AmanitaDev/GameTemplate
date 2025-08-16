@@ -17,6 +17,7 @@ namespace GameTemplate.Scripts.Systems.Audio
         [Inject]
         public void Construct(AudioService audioService)
         {
+            Debug.Log("MenuMusicStarter Construct");
             _audioService = audioService;
             _audioService.StartMenuThemeMusic(restart);
         }

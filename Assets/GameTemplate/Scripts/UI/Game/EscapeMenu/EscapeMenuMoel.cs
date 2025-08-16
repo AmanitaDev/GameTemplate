@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace GameTemplate.Scripts.UI.Game.EscapeMenu
 {
-    public class EscapeMenuPresenter
+    public class EscapeMenuMoel
     {
         private EscapeMenuData model;
         private EscapeMenuView view;
         private SaveLoadManager saveLoadManager;
 
-        public EscapeMenuPresenter(EscapeMenuView view)
+        public EscapeMenuMoel(EscapeMenuView view)
         {
             this.view = view;
             model = new EscapeMenuData();

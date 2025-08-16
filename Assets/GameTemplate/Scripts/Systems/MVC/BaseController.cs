@@ -1,24 +1,38 @@
 using UnityEngine;
+using VContainer;
 
 namespace GameTemplate.Scripts.Systems.MVC
 {
-    public abstract class BaseController<TModel, TView> : IController
-        where TModel : IMVCModel
-        where TView : IMVCView
+    public abstract class BaseController<TModel, TView> : MonoBehaviour, IController
+        where TModel : IModel
+        where TView : IView
     {
-        protected TModel model;
-        protected TView view;
+        [Inject] protected TModel Model { get; private set; }
+        [Inject] protected TView View { get; private set; }
 
-        protected BaseController(TModel model, TView view)
+        protected virtual void Awake()
         {
-            this.model = model;
-            this.view = view;
+            Initialize();
         }
 
         public virtual void Initialize()
         {
-            model.Initialize();
-            view.Show();
+            // Override in child class
+        }
+
+        protected virtual void OnModelChanged()
+        {
+            // Override in child class to update view
+        }
+
+        public virtual void Dispose()
+        {
+            
+        }
+
+        protected virtual void OnDestroy()
+        {
+            Dispose();
         }
     }
 }

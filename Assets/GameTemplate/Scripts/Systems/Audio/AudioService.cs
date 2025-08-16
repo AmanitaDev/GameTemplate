@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Utils;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace GameTemplate.Systems.Audio
         [Inject]
         public void Construct(AudioDataSO audioDataSo)
         {
-            Debug.Log("Construct SoundService");
+            Debug.Log("Construct AudioService");
             _audioDataSo = audioDataSo;
             
             if (_musicSource == null)
@@ -42,6 +43,16 @@ namespace GameTemplate.Systems.Audio
                 _effectSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("FX")[0];
                 Object.DontDestroyOnLoad(_effectSource.gameObject);
             }
+        }
+        
+        public bool IsInitialized { get; private set; }
+
+        public async Task InitializeAsync()
+        {
+            // Simulate loading music/audio clips
+            await Task.Delay(500); // Replace with real audio loading
+            IsInitialized = true;
+            Debug.Log("AudioService initialized");
         }
 
         public void StartMenuThemeMusic(bool restart)

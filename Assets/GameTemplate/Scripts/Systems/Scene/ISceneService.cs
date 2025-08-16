@@ -11,5 +11,6 @@ namespace GameTemplate.Scripts.Systems.Scene
         SceneInstance LastLoadedScene { get; }
         void LoadScene( SceneLoadData sceneLoadData );
         UniTask UnloadScene( );
+        void LoadMenuScene();
     }
 }

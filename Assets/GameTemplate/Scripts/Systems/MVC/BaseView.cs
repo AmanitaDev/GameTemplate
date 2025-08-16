@@ -1,23 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GameTemplate.Scripts.Systems.MVC
 {
-    public abstract class BaseView : MonoBehaviour, IMVCView
+    public class BaseView : MonoBehaviour, IView
     {
-        [SerializeField] private bool isOpenByDefault = true;
-        // use this on unity inspector
-        public bool IsOpenByDefault => isOpenByDefault;
-
-        public virtual void Show()
+        public void BindButton(Button button, UnityEngine.Events.UnityAction action)
         {
-            if (!isOpenByDefault) return;
-            
-            gameObject.SetActive(true);
-        }
-
-        public virtual void Hide()
-        {
-            gameObject.SetActive(false);
+            if (button != null && action != null)
+                button.onClick.AddListener(action);
         }
     }
 }
