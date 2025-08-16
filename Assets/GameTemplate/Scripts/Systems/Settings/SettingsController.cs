@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GameTemplate.Scripts.Systems.MVC;
 using UnityEngine;
-using VContainer;
 
 namespace GameTemplate.Scripts.Systems.Settings
 {

@@ -1,5 +1,5 @@
 
-namespace GameTemplate.Systems.Scene
+namespace GameTemplate.Scripts.Systems.Scene
 {
     public struct SceneLoadData
     {

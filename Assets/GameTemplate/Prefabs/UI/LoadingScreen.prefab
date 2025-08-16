@@ -206,10 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9456e88a3adf48559795a6292c8ff329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CanvasGroup: {fileID: 1068325525984145855}
-  m_DelayBeforeFadeOut: 0.5
-  m_FadeOutDuration: 0.1
-  CameraObject: {fileID: 405834131164073024}
+  canvasGroup: {fileID: 1068325525984145855}
+  delayBeforeFadeOut: 0.5
+  fadeOutDuration: 0.1
+  cameraObject: {fileID: 405834131164073024}
 --- !u!1 &405834131164073024
 GameObject:
   m_ObjectHideFlags: 0

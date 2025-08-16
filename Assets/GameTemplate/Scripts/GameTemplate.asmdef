@@ -12,7 +12,8 @@
         "Unity.ResourceManager",
         "UniTask",
         "UniTask.Addressables",
-        "ToolbarExtender.Editor"
+        "ToolbarExtender.Editor",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,7 +7,6 @@ namespace GameTemplate.Core.Scopes
     {
         MainMenu,
         Game,
-        Upgrades
     }
 
     /// <summary>
@@ -36,7 +35,7 @@ namespace GameTemplate.Core.Scopes
         /// <summary>
         /// This is the single active GameState object. There can be only one.
         /// </summary>
-        private static GameObject s_ActiveStateGO;
+        private static GameObject activeStateGO;
 
         protected override void Awake()
         {
@@ -51,9 +50,9 @@ namespace GameTemplate.Core.Scopes
         // Start is called before the first frame update
         protected virtual void Start()
         {
-            if (s_ActiveStateGO != null)
+            if (activeStateGO != null)
             {
-                if (s_ActiveStateGO == gameObject)
+                if (activeStateGO == gameObject)
                 {
                     //nothing to do here, if we're already the active state object.
                     return;
@@ -61,7 +60,7 @@ namespace GameTemplate.Core.Scopes
 
                 //on the host, this might return either the client or server version, but it doesn't matter which;
                 //we are only curious about its type, and its persist state.
-                var previousState = s_ActiveStateGO.GetComponent<GameStateScope>();
+                var previousState = activeStateGO.GetComponent<GameStateScope>();
 
                 if (previousState.Persists && previousState.ActiveState == ActiveState)
                 {
@@ -72,10 +71,10 @@ namespace GameTemplate.Core.Scopes
 
                 //otherwise, the old state is going away. Either it wasn't a Persisting state, or it was,
                 //but we're a different kind of state. In either case, we're going to be replacing it.
-                Destroy(s_ActiveStateGO);
+                Destroy(activeStateGO);
             }
 
-            s_ActiveStateGO = gameObject;
+            activeStateGO = gameObject;
             if (Persists)
             {
                 DontDestroyOnLoad(gameObject);
@@ -86,7 +85,7 @@ namespace GameTemplate.Core.Scopes
         {
             if (!Persists)
             {
-                s_ActiveStateGO = null;
+                activeStateGO = null;
             }
         }
     }

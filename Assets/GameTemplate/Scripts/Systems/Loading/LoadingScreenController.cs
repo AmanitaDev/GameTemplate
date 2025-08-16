@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using GameTemplate.Systems.Scene;
+using GameTemplate.Scripts.Systems.Scene;
 using UnityEngine;
 using VContainer;
 
@@ -8,17 +7,17 @@ namespace GameTemplate.Scripts.Systems.Loading
 {
     public class LoadingScreenController : MonoBehaviour
     {
-        [SerializeField] CanvasGroup m_CanvasGroup;
+        [SerializeField] CanvasGroup canvasGroup;
 
-        [SerializeField] float m_DelayBeforeFadeOut = 0.5f;
+        [SerializeField] float delayBeforeFadeOut = 0.5f;
 
-        [SerializeField] float m_FadeOutDuration = 0.1f;
+        [SerializeField] float fadeOutDuration = 0.1f;
         
-        public GameObject CameraObject;
+        public GameObject cameraObject;
 
-        bool m_LoadingScreenActive = true;
+        bool loadingScreenActive = true;
 
-        Coroutine m_FadeOutCoroutine;
+        Coroutine fadeOutCoroutine;
 
         ISceneService _sceneService;
 
@@ -40,15 +39,15 @@ namespace GameTemplate.Scripts.Systems.Loading
         public void OpenLoadingScreen()
         {
             SetCanvasVisibility(true);
-            m_LoadingScreenActive = true;
-            CameraObject.SetActive(true);
+            loadingScreenActive = true;
+            cameraObject.SetActive(true);
             Debug.LogError("open canvas");
-            if (m_LoadingScreenActive)
+            if (loadingScreenActive)
             {
-                if (m_FadeOutCoroutine != null)
+                if (fadeOutCoroutine != null)
                 {
                     //Debug.Log("start loading screen");
-                    StopCoroutine(m_FadeOutCoroutine);
+                    StopCoroutine(fadeOutCoroutine);
                 }
             }
         }
@@ -56,34 +55,34 @@ namespace GameTemplate.Scripts.Systems.Loading
         public void CloseLoadingScreen()
         {
             Debug.LogError("close canvas");
-            CameraObject.SetActive(false);
-            if (m_LoadingScreenActive)
+            cameraObject.SetActive(false);
+            if (loadingScreenActive)
             {
-                if (m_FadeOutCoroutine != null)
+                if (fadeOutCoroutine != null)
                 {
                     //Debug.Log("stop loading screen");
-                    StopCoroutine(m_FadeOutCoroutine);
+                    StopCoroutine(fadeOutCoroutine);
                 }
 
-                m_FadeOutCoroutine = StartCoroutine(FadeOutCoroutine());
+                fadeOutCoroutine = StartCoroutine(FadeOutCoroutine());
             }
         }
 
         void SetCanvasVisibility(bool visible)
         {
-            m_CanvasGroup.alpha = visible ? 1 : 0;
-            m_CanvasGroup.blocksRaycasts = visible;
+            canvasGroup.alpha = visible ? 1 : 0;
+            canvasGroup.blocksRaycasts = visible;
         }
 
         IEnumerator FadeOutCoroutine()
         {
-            yield return new WaitForSeconds(m_DelayBeforeFadeOut);
-            m_LoadingScreenActive = false;
+            yield return new WaitForSeconds(delayBeforeFadeOut);
+            loadingScreenActive = false;
 
             float currentTime = 0;
-            while (currentTime < m_FadeOutDuration)
+            while (currentTime < fadeOutDuration)
             {
-                m_CanvasGroup.alpha = Mathf.Lerp(1, 0, currentTime / m_FadeOutDuration);
+                canvasGroup.alpha = Mathf.Lerp(1, 0, currentTime / fadeOutDuration);
                 yield return null;
                 currentTime += Time.deltaTime;
             }

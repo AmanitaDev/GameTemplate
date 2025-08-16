@@ -1,5 +1,6 @@
 using GameTemplate.Systems.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace GameTemplate.Scripts.Systems.Audio
@@ -12,8 +13,7 @@ namespace GameTemplate.Scripts.Systems.Audio
         public class MenuMusicStarter : MonoBehaviour
         {
             // set whether theme should restart if already playing
-            [SerializeField]
-            bool m_Restart;
+            [SerializeField] bool restart;
         
             AudioService _audioService;
 
@@ -21,7 +21,7 @@ namespace GameTemplate.Scripts.Systems.Audio
             public void Construct(AudioService audioService)
             {
                 _audioService = audioService;
-                _audioService.StartGameThemeMusic(m_Restart);
+                _audioService.StartGameThemeMusic(restart);
             }
         }
     }

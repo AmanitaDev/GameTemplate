@@ -10,12 +10,12 @@ namespace GameTemplate.Systems.Audio
     public class AudioService
     {
         //use for music and theme sounds
-        AudioSource _MusicSource;
+        AudioSource _musicSource;
         //use for effect sounds
-        AudioSource _EffectSource;
+        AudioSource _effectSource;
         
         AudioDataSO _audioDataSo;
-        private Transform _Holder;
+        private Transform holder;
 
         [Inject]
         public void Construct(AudioDataSO audioDataSo)
@@ -23,24 +23,24 @@ namespace GameTemplate.Systems.Audio
             Debug.Log("Construct SoundService");
             _audioDataSo = audioDataSo;
             
-            if (_MusicSource == null)
+            if (_musicSource == null)
             {
                 var clone = Object.Instantiate(_audioDataSo.audioObject);
                 clone.name = "Music";
-                _MusicSource = clone.GetComponent<AudioSource>();
-                _MusicSource.volume = UserPrefs.MusicVolume; 
-                _MusicSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("Music")[0];
-                Object.DontDestroyOnLoad(_MusicSource.gameObject);
+                _musicSource = clone.GetComponent<AudioSource>();
+                _musicSource.volume = UserPrefs.MusicVolume; 
+                _musicSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("Music")[0];
+                Object.DontDestroyOnLoad(_musicSource.gameObject);
             }
             
-            if (_EffectSource == null)
+            if (_effectSource == null)
             {
                 var clone = Object.Instantiate(_audioDataSo.audioObject);
                 clone.name = "Effects";
-                _EffectSource = clone.GetComponent<AudioSource>();
-                _EffectSource.volume = UserPrefs.EffectVolume;
-                _EffectSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("FX")[0];
-                Object.DontDestroyOnLoad(_EffectSource.gameObject);
+                _effectSource = clone.GetComponent<AudioSource>();
+                _effectSource.volume = UserPrefs.EffectVolume;
+                _effectSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("FX")[0];
+                Object.DontDestroyOnLoad(_effectSource.gameObject);
             }
         }
 
@@ -54,47 +54,47 @@ namespace GameTemplate.Systems.Audio
             PlayMusic(AudioID.GameMusic, true, restart);
         }
 
-        public void PlaySFX(AudioID id)
+        public void PlaySfx(AudioID id)
         {
-            if (_EffectSource == null)
+            if (_effectSource == null)
             {
                 Debug.LogError("Effect source is null!");
             }
             
-            _EffectSource.clip = _audioDataSo.GetAudio(id);
-            _EffectSource.Play();
+            _effectSource.clip = _audioDataSo.GetAudio(id);
+            _effectSource.Play();
         }
 
         private void PlayMusic(AudioID id, bool looping, bool restart)
         {
-            if (_MusicSource == null)
+            if (_musicSource == null)
             {
                 Debug.LogError("Music source is null!");
             }
             
-            if (_MusicSource.isPlaying)
+            if (_musicSource.isPlaying)
             {
                 // if we dont want to restart the clip do nothing
-                if (!restart && _MusicSource.clip == _audioDataSo.GetAudio(id))
+                if (!restart && _musicSource.clip == _audioDataSo.GetAudio(id))
                     return;
 
-                _MusicSource.Stop();
+                _musicSource.Stop();
             }
 
-            _MusicSource.clip = _audioDataSo.GetAudio(id);
-            _MusicSource.loop = looping;
-            _MusicSource.time = 0;
-            _MusicSource.Play();
+            _musicSource.clip = _audioDataSo.GetAudio(id);
+            _musicSource.loop = looping;
+            _musicSource.time = 0;
+            _musicSource.Play();
         }
 
         public void SetMusicSourceVolume(float volume)
         {
-            _MusicSource.volume = volume;
+            _musicSource.volume = volume;
         }
         
         public void SetEffectsSourceVolume(float volume)
         {
-            _EffectSource.volume = volume;
+            _effectSource.volume = volume;
         }
     }
 }

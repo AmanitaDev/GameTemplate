@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameTemplate.Utils
+namespace GameTemplate.Scripts.Utils
 {
     public static class UIHelpers
     {

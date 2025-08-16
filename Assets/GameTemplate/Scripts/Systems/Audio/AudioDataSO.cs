@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using GameTemplate.Scripts.Systems.Audio;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace GameTemplate.Systems.Audio
+namespace GameTemplate.Scripts.Systems.Audio
 {
     [CreateAssetMenu(fileName = "AudioData", menuName = "Scriptable Objects/Audio data", order = 0)]
     public class AudioDataSO : SerializedScriptableObject

@@ -2,7 +2,6 @@ using GameTemplate.Scripts.Systems.MVC;
 using GameTemplate.Systems.Audio;
 using GameTemplate.Utils;
 using UnityEngine;
-using VContainer;
 
 namespace GameTemplate.Scripts.Systems.Settings
 {

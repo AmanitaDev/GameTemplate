@@ -45,10 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: GameTemplate.ApplicationLifeCycle.ApplicationScope
+    TypeName: GameTemplate.Core.Scopes.ApplicationScope
   autoRun: 1
   autoInjectGameObjects: []
-  _levelPrefabParent: {fileID: 0}
-  _uiGameCanvas: {fileID: 0}
-  _earningsUI: {fileID: 0}
-  _winParticleImage: {fileID: 0}
+  uiGameCanvas: {fileID: 0}

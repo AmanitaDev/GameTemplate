@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace GameTemplate.Utils
+namespace GameTemplate.Scripts.Utils
 {
     public static class EnumExtensions
     {

@@ -1,6 +1,6 @@
 using UnityEngine.AddressableAssets;
 
-namespace GameTemplate.Systems.Scene
+namespace GameTemplate.Scripts.Systems.Scene
 {
     [System.Serializable]
     public struct SceneNameData

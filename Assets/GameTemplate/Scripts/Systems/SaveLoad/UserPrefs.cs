@@ -9,12 +9,12 @@ namespace GameTemplate.Utils
     /// </summary>
     public static class UserPrefs
     {
-        const string k_FirstPlayKey = "FirtPlay";
+        const string firstPlayKey = "FirtPlay";
 
         public static bool IsFirstPlay
         {
-            get => !PlayerPrefs.HasKey(k_FirstPlayKey);
-            set => PlayerPrefs.SetInt(k_FirstPlayKey, value ? 1 : 0);
+            get => !PlayerPrefs.HasKey(firstPlayKey);
+            set => PlayerPrefs.SetInt(firstPlayKey, value ? 1 : 0);
         }
 
         public static void DeleteAll()
@@ -24,47 +24,47 @@ namespace GameTemplate.Utils
 
         #region Settings Values
 
-        const string k_MusicVolumeKey = "MusicVolume";
-        const string k_EffectVolumeKey = "EffectVolume";
-        const string k_ResolutionIndexKey = "ResolutionIndex";
-        const string k_IsFullscreenKey = "IsFullscreen";
-        const string k_UseVSyncKey = "UseVSync";
-        const string k_QualityLevelKey = "QualityLevel";
+        const string musicVolumeKey = "MusicVolume";
+        const string effectVolumeKey = "EffectVolume";
+        const string resolutionIndexKey = "ResolutionIndex";
+        const string isFullscreenKey = "IsFullscreen";
+        const string useVSyncKey = "UseVSync";
+        const string qualityLevelKey = "QualityLevel";
 
         public static float MusicVolume
         {
-            get => PlayerPrefs.GetFloat(k_MusicVolumeKey, .2f);
-            set => PlayerPrefs.SetFloat(k_MusicVolumeKey, value);
+            get => PlayerPrefs.GetFloat(musicVolumeKey, .2f);
+            set => PlayerPrefs.SetFloat(musicVolumeKey, value);
         }
 
         public static float EffectVolume
         {
-            get => PlayerPrefs.GetFloat(k_EffectVolumeKey, .2f);
-            set => PlayerPrefs.SetFloat(k_EffectVolumeKey, value);
+            get => PlayerPrefs.GetFloat(effectVolumeKey, .2f);
+            set => PlayerPrefs.SetFloat(effectVolumeKey, value);
         }
 
         public static int ResolutionIndex
         {
-            get => PlayerPrefs.GetInt(k_ResolutionIndexKey);
-            set => PlayerPrefs.SetInt(k_ResolutionIndexKey, value);
+            get => PlayerPrefs.GetInt(resolutionIndexKey);
+            set => PlayerPrefs.SetInt(resolutionIndexKey, value);
         }
 
         public static bool IsFullscreen
         {
-            get => PlayerPrefs.GetInt(k_IsFullscreenKey) == 1;
-            set => PlayerPrefs.SetInt(k_IsFullscreenKey, value ? 1 : 0);
+            get => PlayerPrefs.GetInt(isFullscreenKey) == 1;
+            set => PlayerPrefs.SetInt(isFullscreenKey, value ? 1 : 0);
         }
 
         public static bool UseVSync
         {
-            get => PlayerPrefs.GetInt(k_UseVSyncKey) == 1;
-            set => PlayerPrefs.SetInt(k_UseVSyncKey, value ? 1 : 0);
+            get => PlayerPrefs.GetInt(useVSyncKey) == 1;
+            set => PlayerPrefs.SetInt(useVSyncKey, value ? 1 : 0);
         }
 
         public static int QualityLevel
         {
-            get => PlayerPrefs.GetInt(k_QualityLevelKey);
-            set => PlayerPrefs.SetInt(k_QualityLevelKey, value);
+            get => PlayerPrefs.GetInt(qualityLevelKey);
+            set => PlayerPrefs.SetInt(qualityLevelKey, value);
         }
 
         #endregion

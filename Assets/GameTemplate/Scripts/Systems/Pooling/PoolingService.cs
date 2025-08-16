@@ -16,13 +16,13 @@ namespace GameTemplate.Systems.Pooling
         // wes store pool objects that parents changed in this dictionary. this way we can retrieve them back
         [SerializeField] private List<PoolElement> parentsChangedPoolObjects = new List<PoolElement>();
 
-        PoolingData _poolingDataData;
+        PoolingDataSO _poolingDataSoDataSo;
 
         [Inject]
-        public void Construct(PoolingData poolingDataData)
+        public void Construct(PoolingDataSO poolingDataSoDataSo)
         {
             Debug.Log("Construct PoolingService");
-            _poolingDataData = poolingDataData;
+            _poolingDataSoDataSo = poolingDataSoDataSo;
             SpawnObjects();
         }
 
@@ -32,15 +32,15 @@ namespace GameTemplate.Systems.Pooling
             poolParent = new GameObject("_PoolParent").transform;
             DontDestroyOnLoad(poolParent.gameObject);
             
-            for (int i = 0; i < _poolingDataData.poolObjects.Length; i++)
+            for (int i = 0; i < _poolingDataSoDataSo.poolObjects.Length; i++)
             {
                 objectPool.Add((PoolID)i, new Queue<GameObject>());
-                for (int z = 0; z < _poolingDataData.poolObjects[i].objectCount; z++)
+                for (int z = 0; z < _poolingDataSoDataSo.poolObjects[i].objectCount; z++)
                 {
-                    GameObject newObject = Object.Instantiate(_poolingDataData.poolObjects[i].objectPrefab, poolParent);
+                    GameObject newObject = Object.Instantiate(_poolingDataSoDataSo.poolObjects[i].objectPrefab, poolParent);
                     newObject.SetActive(false);
                     newObject.GetComponent<PoolElement>()
-                        .Initialize(_poolingDataData.poolObjects[i].goBackOnDisable, (PoolID)i);
+                        .Initialize(_poolingDataSoDataSo.poolObjects[i].goBackOnDisable, (PoolID)i);
                     objectPool[(PoolID)i].Enqueue(newObject);
                 }
             }
@@ -129,7 +129,7 @@ namespace GameTemplate.Systems.Pooling
             }
 
             PoolObject selectedPoolObject =
-                _poolingDataData.poolObjects.Where(x => x.poolName.Equals(poolId.ToString())).First();
+                _poolingDataSoDataSo.poolObjects.Where(x => x.poolName.Equals(poolId.ToString())).First();
 
             if (selectedPoolObject != null)
             {
@@ -161,7 +161,7 @@ namespace GameTemplate.Systems.Pooling
             }
 
             PoolObject selectedPoolObject =
-                _poolingDataData.poolObjects.Where(x => x.poolName.Equals(poolId.ToString())).First();
+                _poolingDataSoDataSo.poolObjects.Where(x => x.poolName.Equals(poolId.ToString())).First();
 
             if (selectedPoolObject != null)
             {

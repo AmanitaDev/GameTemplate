@@ -6,7 +6,7 @@ using UnityEngine;
 namespace GameTemplate.Systems.Pooling
 {
     [CreateAssetMenu(fileName = "PoolingManager", menuName = "Scriptable Objects/Pooling")]
-    public class PoolingData : ScriptableObject
+    public class PoolingDataSO : ScriptableObject
     {
         public PoolObject[] poolObjects;
 

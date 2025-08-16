@@ -1,27 +1,26 @@
-using System.Collections.Generic;
+using GameTemplate.Scripts.Systems.Scene;
 using GameTemplate.Systems.Audio;
-using GameTemplate.Systems.Scene;
 using GameTemplate.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-using SceneLoadData = GameTemplate.Systems.Scene.SceneLoadData;
+using SceneLoadData = GameTemplate.Scripts.Systems.Scene.SceneLoadData;
 
-namespace GameTemplate.Gameplay.UI
+namespace GameTemplate.Scripts.UI.Menu
 {
     public class MenuUICanvas : MonoBehaviour
     {
         [SerializeField] Button ContinueButton;
         [SerializeField] GameObject ConfirmPanel;
 
-        ISceneService _SceneService;
+        ISceneService _sceneService;
         AudioService _audioService;
         
         [Inject]
         public void Construct(ISceneService sceneLoader, AudioService audioService)
         {
             Debug.Log("Construct MenuUICanvas");
-            _SceneService = sceneLoader;
+            _sceneService = sceneLoader;
             _audioService = audioService;
 
             ContinueButton.interactable = !UserPrefs.IsFirstPlay;
@@ -52,7 +51,7 @@ namespace GameTemplate.Gameplay.UI
 
         public void LoadGameScene()
         {
-            _SceneService.LoadScene(new SceneLoadData
+            _sceneService.LoadScene(new SceneLoadData
             {
                 sceneName = "Game",
                 unloadCurrent = true,

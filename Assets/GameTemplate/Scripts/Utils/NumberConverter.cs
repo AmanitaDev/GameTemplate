@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace GameTemplate.Utils
+namespace GameTemplate.Scripts.Utils
 {
     public static class NumberConverter
     {

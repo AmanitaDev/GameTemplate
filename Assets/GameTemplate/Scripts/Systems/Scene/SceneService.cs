@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameTemplate.Systems.Scene
+namespace GameTemplate.Scripts.Systems.Scene
 {
     public class SceneService : ISceneService, IStartable
     {
@@ -15,19 +15,19 @@ namespace GameTemplate.Systems.Scene
 
         public event Action OnSceneLoaded = delegate { };
 
-        private SceneData _data;
+        private SceneDataSO _dataSo;
         public SceneInstance LastLoadedScene { get; private set; }
 
         [Inject]
-        private void Construct(SceneData data)
+        private void Construct(SceneDataSO dataSo)
         {
             Debug.Log("Construct SceneService");
-            _data = data;
+            _dataSo = dataSo;
             
             Debug.LogError("Initialize SceneService");
             LoadScene(new SceneLoadData
             {
-                sceneName = _data.nameOfSceneToLoadOnOpening,
+                sceneName = _dataSo.nameOfSceneToLoadOnOpening,
                 unloadCurrent = false,
                 activateLoadingCanvas = true,
                 setActiveScene = true
@@ -55,7 +55,7 @@ namespace GameTemplate.Systems.Scene
             if (sceneLoadData.unloadCurrent)
                 await UnloadScene();
 
-            var sceneReference = _data.GetSceneByName(sceneLoadData.sceneName);
+            var sceneReference = _dataSo.GetSceneByName(sceneLoadData.sceneName);
 
             var result = await Addressables.LoadSceneAsync(sceneReference, LoadSceneMode.Additive);
 

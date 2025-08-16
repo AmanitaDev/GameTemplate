@@ -1,6 +1,7 @@
 using GameTemplate.Scripts.Systems.Settings;
 using GameTemplate.Systems.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -15,7 +16,7 @@ namespace GameTemplate.Core.Scopes
         public override bool Persists => false;
         public override GameState ActiveState => GameState.MainMenu;
         
-        [SerializeField] private GameSettingsSO settingsSO;
+        [SerializeField] private GameSettingsSO settingsSo;
         [SerializeField] private SettingsView settingsView;
 
         protected override void Configure(IContainerBuilder builder)
@@ -30,7 +31,7 @@ namespace GameTemplate.Core.Scopes
             // Resolve SoundService from container
             var soundService = Container.Resolve<AudioService>();
             
-            var model = new SettingsModel(settingsSO, soundService);
+            var model = new SettingsModel(settingsSo, soundService);
             var controller = new SettingsController(model, settingsView);
             controller.Initialize();
         }

@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace GameTemplate.Systems.Scene
+namespace GameTemplate.Scripts.Systems.Scene
 {
     [CreateAssetMenu( fileName = "SceneData", menuName = "Scriptable Objects/SceneData" )]
-    public class SceneData : ScriptableObject
+    public class SceneDataSO : ScriptableObject
     {
         [SerializeField] private SceneNameData[] sceneData;
 

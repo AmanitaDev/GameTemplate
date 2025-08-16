@@ -2698,11 +2698,6 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 6977151268681041748, guid: 12187630713931b46ad96ee291e39cfa,
         type: 3}
-      propertyPath: parentReference.TypeName
-      value: GameTemplate.Core.Scopes.ApplicationScope
-      objectReference: {fileID: 0}
-    - target: {fileID: 6977151268681041748, guid: 12187630713931b46ad96ee291e39cfa,
-        type: 3}
       propertyPath: autoInjectGameObjects.Array.size
       value: 2
       objectReference: {fileID: 0}

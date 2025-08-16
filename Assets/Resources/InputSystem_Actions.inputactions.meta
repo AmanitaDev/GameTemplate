@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7e934ab5cd51d7a478419896d913b041
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 8404be70184654265930450def6a9037, type: 3}
+  generateWrapperCode: 1
+  wrapperCodePath: Assets/GameTemplate/Scripts/Systems/Input/InputSystem_Actions.cs
+  wrapperClassName: Controls
+  wrapperCodeNamespace: GameTemplate.Scripts.Systems.Input

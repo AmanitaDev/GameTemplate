@@ -1,4 +1,4 @@
-using GameTemplate.Systems.Audio;
+using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Systems.Pooling;
 
 #if UNITY_EDITOR
@@ -13,7 +13,6 @@ namespace GameTemplate.Scripts.Editor
 #if UNITY_EDITOR
     public class GameTemplateMenu : OdinMenuEditorWindow
     {
-
         [MenuItem("GameTemplate/Settings", false, 30)]
         private static void OpenWindow()
         {
@@ -27,7 +26,7 @@ namespace GameTemplate.Scripts.Editor
             var tree = new OdinMenuTree();
             tree.AddAssetAtPath("Editor Game Settings", "Assets/Resources/EditorGameSettings.asset",
                 typeof(EditorGameSettings));
-            tree.AddAssetAtPath("Pooling Data", "Assets/Resources/Data/PoolingData.asset", typeof(PoolingData));
+            tree.AddAssetAtPath("Pooling Data", "Assets/Resources/Data/PoolingData.asset", typeof(PoolingDataSO));
             tree.AddAssetAtPath("Audio Data", "Assets/Resources/Data/AudioData.asset", typeof(AudioDataSO));
             return tree;
         }
