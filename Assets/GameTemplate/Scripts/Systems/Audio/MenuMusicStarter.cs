@@ -1,10 +1,11 @@
+using GameTemplate.Systems.Audio;
 using UnityEngine;
 using VContainer;
 
-namespace GameTemplate.Systems.Audio
+namespace GameTemplate.Scripts.Systems.Audio
 {
     /// <summary>
-    /// Simple class to play game theme on scene load
+    /// Simple class to play menu theme on scene load
     /// </summary>
     public class MenuMusicStarter : MonoBehaviour
     {

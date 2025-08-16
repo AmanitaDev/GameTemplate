@@ -3,13 +3,10 @@ using GameTemplate.Systems.Scene;
 using UnityEngine;
 using VContainer;
 
-namespace GameTemplate.UI
+namespace GameTemplate.Scripts.UI.Game
 {
     public class UIGameCanvas : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject TopPanel, WinPanel, LosePanel;
-
         ISceneService _SceneService;
 
         [Inject]
@@ -18,31 +15,10 @@ namespace GameTemplate.UI
             Debug.Log("Construct UIGameCanvas");
             _SceneService = SceneService;
         }
-
-        public void Initialize(int UIlevelID)
-        {
-            LevelTextSetter[] levelTextSetters = GetComponentsInChildren<LevelTextSetter>();
-            foreach (var levelTextSetter in levelTextSetters)
-            {
-                levelTextSetter.SetLevelText(UIlevelID);
-            }
-
-            if (UIlevelID == 1)
-            {
-                TopPanel.SetActive(false);
-            }
-        }
         
         public void GameFinished(bool gameWon)
         {
-            if (gameWon)
-            {
-                OpenPanel(WinPanel.GetComponent<CanvasGroup>());
-            }
-            else
-            {
-                OpenPanel(LosePanel.GetComponent<CanvasGroup>());
-            }
+            
         }
 
         void OpenPanel(CanvasGroup group)

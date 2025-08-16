@@ -1,6 +1,8 @@
-public enum AudioID
+namespace GameTemplate.Scripts.Systems.Audio
 {
-    MenuMusic,
-    Win,
-    Lose,
+    public enum AudioID
+    {
+        MenuMusic,
+        GameMusic,
+    }
 }

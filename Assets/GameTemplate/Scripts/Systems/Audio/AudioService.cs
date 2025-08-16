@@ -1,3 +1,4 @@
+using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Utils;
 using UnityEngine;
 using VContainer;
@@ -47,6 +48,11 @@ namespace GameTemplate.Systems.Audio
         {
             PlayMusic(AudioID.MenuMusic, true, restart);
         }
+        
+        public void StartGameThemeMusic(bool restart)
+        {
+            PlayMusic(AudioID.GameMusic, true, restart);
+        }
 
         public void PlaySFX(AudioID id)
         {
@@ -55,7 +61,7 @@ namespace GameTemplate.Systems.Audio
                 Debug.LogError("Effect source is null!");
             }
             
-            _EffectSource.clip = _audioDataSo.GetAudio(AudioID.Win);
+            _EffectSource.clip = _audioDataSo.GetAudio(id);
             _EffectSource.Play();
         }
 

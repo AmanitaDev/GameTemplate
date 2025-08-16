@@ -10,7 +10,6 @@ namespace GameTemplate.Systems.Scene
         [SerializeField] private SceneNameData[] sceneData;
 
         public string nameOfSceneToLoadOnOpening;
-        public string nameOfSceneUIScene;
 
         public AssetReference GetSceneByName( string sceneName )
         {
