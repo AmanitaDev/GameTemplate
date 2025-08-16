@@ -1,9 +1,11 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
+#endif
 
 namespace GameTemplate.Scripts.Editor
 {
+#if UNITY_EDITOR
     [InitializeOnLoad]
     public static class StartAtFirstScene
     {
@@ -24,4 +26,5 @@ namespace GameTemplate.Scripts.Editor
             }
         }
     }
+#endif
 }

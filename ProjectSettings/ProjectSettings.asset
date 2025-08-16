@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: AmanitaGames
-  productName: PackNShip
+  productName: GameTemplate
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -145,6 +145,8 @@ PlayerSettings:
   bundleVersion: 0.0.1
   preloadedAssets:
   - {fileID: 11400000, guid: b34bce42f2a76ea4385d32a21e13789a, type: 2}
+  - {fileID: 11400000, guid: 6a6b02c6952e1a949becfcd63fe6803e, type: 2}
+  - {fileID: -944628639613478452, guid: 7e934ab5cd51d7a478419896d913b041, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
