@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameTemplate.Utils
 {
-    public static class NumberHelper
+    public static class NumberConverter
     {
         public static Dictionary<int, string> numExponentialTable;
 
