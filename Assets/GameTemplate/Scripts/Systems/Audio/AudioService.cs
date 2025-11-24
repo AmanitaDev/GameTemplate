@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Utils;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
 
-namespace GameTemplate.Systems.Audio
+namespace GameTemplate.Scripts.Systems.Audio
 {
     [RequireComponent(typeof(AudioSource))]
     public class AudioService
@@ -55,16 +54,6 @@ namespace GameTemplate.Systems.Audio
             Debug.Log("AudioService initialized");
         }
 
-        public void StartMenuThemeMusic(bool restart)
-        {
-            PlayMusic(AudioID.MenuMusic, true, restart);
-        }
-        
-        public void StartGameThemeMusic(bool restart)
-        {
-            PlayMusic(AudioID.GameMusic, true, restart);
-        }
-
         public void PlaySfx(AudioID id)
         {
             if (_effectSource == null)
@@ -76,7 +65,7 @@ namespace GameTemplate.Systems.Audio
             _effectSource.Play();
         }
 
-        private void PlayMusic(AudioID id, bool looping, bool restart)
+        public void PlayMusic(AudioID id, bool looping, bool restart)
         {
             if (_musicSource == null)
             {

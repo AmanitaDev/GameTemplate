@@ -1,28 +1,26 @@
-using GameTemplate.Systems.Audio;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
+using VContainer.Unity;
 
 namespace GameTemplate.Scripts.Systems.Audio
 {
-    public class GameMusicStarter : MonoBehaviour
+    public class GameMusicStarter : IStartable
     {
-        /// <summary>
-        /// Simple class to play game theme on scene load
-        /// </summary>
-        public class MenuMusicStarter : MonoBehaviour
-        {
-            // set whether theme should restart if already playing
-            [SerializeField] bool restart;
-        
-            AudioService _audioService;
+        private readonly AudioService _audioService;
 
-            [Inject]
-            public void Construct(AudioService audioService)
-            {
-                _audioService = audioService;
-                _audioService.StartGameThemeMusic(restart);
-            }
+        // 💡 Dependencies are injected via the constructor
+        public GameMusicStarter(AudioService audioService)
+        {
+            _audioService = audioService;
+        }
+
+        // 💡 VContainer calls this method after all bindings are resolved.
+        public void Start()
+        {
+            // Place your logic here to start the music.
+            // This happens immediately after the container is built.
+            _audioService.PlayMusic(AudioID.GameMusic, true, true); 
         }
     }
 }

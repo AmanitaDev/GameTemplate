@@ -1,9 +1,10 @@
 using System.IO;
+using GameTemplate.Systems.Pooling;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-namespace GameTemplate.Systems.Pooling
+namespace GameTemplate.Scripts.Systems.Pooling
 {
     [CreateAssetMenu(fileName = "PoolingManager", menuName = "Scriptable Objects/Pooling")]
     public class PoolingDataSO : ScriptableObject

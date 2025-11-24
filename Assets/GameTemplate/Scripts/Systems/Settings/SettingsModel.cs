@@ -1,5 +1,5 @@
+using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.MVC;
-using GameTemplate.Systems.Audio;
 using GameTemplate.Utils;
 using UnityEngine;
 

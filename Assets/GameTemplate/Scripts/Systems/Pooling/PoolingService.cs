@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using GameTemplate.Systems.Pooling;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
-namespace GameTemplate.Systems.Pooling
+namespace GameTemplate.Scripts.Systems.Pooling
 {
     public class PoolingService : MonoBehaviour
     {

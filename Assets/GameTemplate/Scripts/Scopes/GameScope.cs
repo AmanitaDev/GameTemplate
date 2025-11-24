@@ -1,6 +1,6 @@
+using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Scene;
 using GameTemplate.Scripts.UI.Game;
-using GameTemplate.Systems.Audio;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -30,6 +30,10 @@ namespace GameTemplate.Scripts.Scopes
             base.Configure(builder);
             
             builder.RegisterComponentInHierarchy<UIGameCanvas>();
+            
+            // Register the MenuMusicStarter as an entry point
+            // VContainer will instantiate this class and call its Start() method.
+            builder.RegisterEntryPoint<GameMusicStarter>();
         }
 
         protected override void OnDestroy()

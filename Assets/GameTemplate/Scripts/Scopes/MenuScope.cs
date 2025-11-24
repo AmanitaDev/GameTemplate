@@ -1,4 +1,6 @@
+using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Settings;
+using GameTemplate.Scripts.UI.Menu;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -21,6 +23,12 @@ namespace GameTemplate.Scripts.Scopes
             base.Configure(builder);
 
             builder.RegisterInstance(settingsDataSo);
+            
+            // Register the MenuMusicStarter as an entry point
+            // VContainer will instantiate this class and call its Start() method.
+            builder.RegisterEntryPoint<MenuMusicStarter>();
+            
+            builder.RegisterComponentInHierarchy<MenuUICanvas>();
 
             builder.Register<SettingsModel>(Lifetime.Singleton).AsSelf();
             builder.RegisterComponentInHierarchy<SettingsView>();

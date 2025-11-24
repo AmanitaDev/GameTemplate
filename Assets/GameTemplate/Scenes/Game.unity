@@ -423,6 +423,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
+      propertyPath: parentReference.TypeName
+      value: GameTemplate.Scripts.Scopes.ApplicationScope
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
+        type: 3}
       propertyPath: autoInjectGameObjects.Array.size
       value: 3
       objectReference: {fileID: 0}

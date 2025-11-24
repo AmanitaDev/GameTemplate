@@ -1,9 +1,8 @@
 using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Input;
 using GameTemplate.Scripts.Systems.Loading;
+using GameTemplate.Scripts.Systems.Pooling;
 using GameTemplate.Scripts.Systems.Scene;
-using GameTemplate.Systems.Audio;
-using GameTemplate.Systems.Pooling;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -34,24 +33,14 @@ namespace GameTemplate.Scripts.Scopes
             
             // Register the generated Controls class as a singleton
             builder.Register<Controls>(Lifetime.Singleton).AsSelf();
-        }
-
-        protected override async void Awake()
-        {
-            base.Awake();
             
-            // Ensure SoundService is ready before Main Menu
-            var audioService = Container.Resolve<AudioService>();
-            await audioService.InitializeAsync();
-            
-            var sceneService = Container.Resolve<ISceneService>();
-            sceneService.LoadMenuScene();
+            // VContainer will instantiate this class and call Start() after binding.
+            builder.RegisterEntryPoint<GameInitializer>();
         }
 
         public void Start()
         {
             Application.targetFrameRate = 60;
-            //SceneManager.LoadScene("MainMenu");
         }
     }
 }
