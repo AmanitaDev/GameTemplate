@@ -24,12 +24,12 @@ MonoBehaviour:
     SerializationNodes:
     - Name: AudioClips
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[AudioID, GameTemplate],[UnityEngine.AudioClip,
-        UnityEngine.AudioModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[GameTemplate.Scripts.Systems.Audio.AudioID,
+        GameTemplate],[UnityEngine.AudioClip, UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[AudioID, GameTemplate]],
-        mscorlib
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[GameTemplate.Scripts.Systems.Audio.AudioID,
+        GameTemplate]], mscorlib
     - Name: 
       Entry: 12
       Data: 0

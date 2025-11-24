@@ -8,7 +8,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameTemplate.Scripts.Core.Scopes
+namespace GameTemplate.Scripts.Scopes
 {
     /// <summary>
     /// An entry point to the application, where we bind all the common dependencies to the root DI scope.

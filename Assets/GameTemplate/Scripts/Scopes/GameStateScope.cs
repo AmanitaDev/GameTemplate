@@ -1,7 +1,7 @@
 using UnityEngine;
 using VContainer.Unity;
 
-namespace GameTemplate.Core.Scopes
+namespace GameTemplate.Scripts.Scopes
 {
     public enum GameState
     {

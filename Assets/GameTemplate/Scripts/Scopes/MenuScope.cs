@@ -1,12 +1,9 @@
-using GameTemplate.Scripts.Systems.MVC;
 using GameTemplate.Scripts.Systems.Settings;
-using GameTemplate.Systems.Audio;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameTemplate.Core.Scopes
+namespace GameTemplate.Scripts.Scopes
 {
     /// <summary>
     /// Game Logic that runs when sitting at the MainMenu. This is likely to be "nothing", as no game has been started. But it is

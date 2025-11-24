@@ -1,4 +1,3 @@
-using GameTemplate.Core.Scopes;
 using GameTemplate.Scripts.Systems.Scene;
 using GameTemplate.Scripts.UI.Game;
 using GameTemplate.Systems.Audio;
@@ -6,7 +5,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace GameTemplate.Scripts.Core.Scopes
+namespace GameTemplate.Scripts.Scopes
 {
     public class GameScope : GameStateScope
     {

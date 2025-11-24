@@ -15,13 +15,14 @@ namespace GameTemplate.Scripts.Systems.Settings
             // Initialize view
             View.SetInitialValues(Model);
 
+            // add resolution options depending on the hardware
             List<string> resolutionOptions = new List<string>();
             foreach (var resolution in Screen.resolutions.Reverse())
             {
                 resolutionOptions.Add($"{resolution.width}x{resolution.height} - {resolution.refreshRate}hz");
             }
-
             View.ResolutionDropdown.AddOptions(resolutionOptions);
+            // find and set default resolution to the 1920x1080
             int id = Screen.resolutions.Select((item, i) => new { Item = item, Index = i })
                 .First(x => x.Item is { width: 1920, height: 1080 }).Index;
             Model.SetResolution(id);
