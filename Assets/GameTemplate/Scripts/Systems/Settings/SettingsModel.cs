@@ -57,7 +57,6 @@ namespace GameTemplate.Scripts.Systems.Settings
         public void SetEffectsVolume(float volume)
         {
             EffectsVolume = volume;
-            _audioService.SetEffectsSourceVolume(volume);
         }
 
         public void SetQuality(int level)

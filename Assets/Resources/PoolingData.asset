@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b0dd107206401db1a85c44adeccc4f, type: 3}
   m_Name: PoolingData
   m_EditorClassIdentifier: 
-  poolObjects: []
+  poolObjects:
+  - objectPrefab: {fileID: 90362005414443727, guid: b845cd8fb3ccfee498d6b3518ecd63f1,
+      type: 3}
+    poolName: AudioSource
+    objectCount: 10
+    goBackOnDisable: 1

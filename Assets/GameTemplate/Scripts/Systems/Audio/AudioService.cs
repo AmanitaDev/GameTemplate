@@ -1,4 +1,7 @@
+using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using GameTemplate.Scripts.Systems.Pooling;
 using GameTemplate.Utils;
 using UnityEngine;
 using VContainer;
@@ -6,46 +9,46 @@ using Object = UnityEngine.Object;
 
 namespace GameTemplate.Scripts.Systems.Audio
 {
-    [RequireComponent(typeof(AudioSource))]
+    /// <summary>
+    /// Core application service responsible for managing all audio playback (Music, SFX).
+    /// It uses VContainer for dependency injection and integrates with a PoolingService 
+    /// for efficient handling of multiple simultaneous sound effects (SFX).
+    /// </summary>
     public class AudioService
     {
-        //use for music and theme sounds
+        // Dedicated source for music and theme sounds. Kept as a single, long-lived source.
         AudioSource _musicSource;
-        //use for effect sounds
-        AudioSource _effectSource;
         
+        // Dependencies injected via VContainer
         AudioDataSO _audioDataSo;
-        private Transform holder;
+        PoolingService _poolingService;
 
-        [Inject]
-        public void Construct(AudioDataSO audioDataSo)
+        /// <summary>
+        /// VContainer Method Injection for mandatory service dependencies.
+        /// This is where the core AudioSource GameObjects are fetched and configured.
+        /// </summary>
+        public AudioService(AudioDataSO audioDataSo, PoolingService poolingService)
         {
             Debug.Log("Construct AudioService");
             _audioDataSo = audioDataSo;
+            _poolingService = poolingService;
             
             if (_musicSource == null)
             {
-                var clone = Object.Instantiate(_audioDataSo.audioObject);
+                var clone = _poolingService.GetGameObjectById(PoolID.AudioSource);
                 clone.name = "Music";
                 _musicSource = clone.GetComponent<AudioSource>();
                 _musicSource.volume = UserPrefs.MusicVolume; 
                 _musicSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("Music")[0];
                 Object.DontDestroyOnLoad(_musicSource.gameObject);
             }
-            
-            if (_effectSource == null)
-            {
-                var clone = Object.Instantiate(_audioDataSo.audioObject);
-                clone.name = "Effects";
-                _effectSource = clone.GetComponent<AudioSource>();
-                _effectSource.volume = UserPrefs.EffectVolume;
-                _effectSource.outputAudioMixerGroup = audioDataSo.audioMixer.FindMatchingGroups("FX")[0];
-                Object.DontDestroyOnLoad(_effectSource.gameObject);
-            }
         }
         
         public bool IsInitialized { get; private set; }
 
+        /// <summary>
+        /// Handles asynchronous service initialization, typically for Addressable or remote resource loading.
+        /// </summary>
         public async Task InitializeAsync()
         {
             // Simulate loading music/audio clips
@@ -54,17 +57,54 @@ namespace GameTemplate.Scripts.Systems.Audio
             Debug.Log("AudioService initialized");
         }
 
+        /// <summary>
+        /// Plays a sound effect by fetching a temporary AudioSource from the pool.
+        /// This allows for multiple simultaneous SFX playback without cutting off previous sounds.
+        /// </summary>
+        /// <param name="id">The unique identifier of the audio clip to play.</param>
         public void PlaySfx(AudioID id)
         {
-            if (_effectSource == null)
-            {
-                Debug.LogError("Effect source is null!");
-            }
+            var audioClip = _audioDataSo.GetAudio(id);
+            if (audioClip == null) return;
             
-            _effectSource.clip = _audioDataSo.GetAudio(id);
-            _effectSource.Play();
+            // Get a source from the pool
+            var pooledObject = _poolingService.GetGameObjectById(PoolID.AudioSource);
+            var source = pooledObject.GetComponent<AudioSource>();
+
+            if (source == null)
+            {
+                Debug.LogError("Pooled object is missing AudioSource component!");
+                return;
+            }
+
+            // Configure and play the source
+            source.clip = audioClip;
+            source.volume = UserPrefs.EffectVolume; // Use the current volume setting
+            source.loop = false; // SFX should generally not loop
+            source.outputAudioMixerGroup = _audioDataSo.audioMixer.FindMatchingGroups("FX")[0];
+            source.gameObject.SetActive(true);
+            source.Play();
+            
+            // Schedule the source to be returned to the pool after the clip finishes
+            float duration = audioClip.length;
+            ReturnSourceAfterDelay(pooledObject, duration).Forget();
+        }
+        
+        /// <summary>
+        /// Asynchronously waits for the clip duration and returns the AudioSource back to the pool.
+        /// </summary>
+        private async UniTaskVoid ReturnSourceAfterDelay(GameObject pooledObject, float delay)
+        {
+            // Wait for the duration of the audio clip plus a small buffer
+            await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: false);
+            
+            // Return the object to the pool
+            pooledObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Plays music on the dedicated music source, handling restart logic.
+        /// </summary>
         public void PlayMusic(AudioID id, bool looping, bool restart)
         {
             if (_musicSource == null)
@@ -87,14 +127,12 @@ namespace GameTemplate.Scripts.Systems.Audio
             _musicSource.Play();
         }
 
+        /// <summary>
+        /// Sets the volume for the music track group.
+        /// </summary>
         public void SetMusicSourceVolume(float volume)
         {
             _musicSource.volume = volume;
-        }
-        
-        public void SetEffectsSourceVolume(float volume)
-        {
-            _effectSource.volume = volume;
         }
     }
 }
