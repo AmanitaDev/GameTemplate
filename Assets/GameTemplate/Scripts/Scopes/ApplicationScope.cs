@@ -2,6 +2,7 @@ using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Input;
 using GameTemplate.Scripts.Systems.Loading;
 using GameTemplate.Scripts.Systems.Pooling;
+using GameTemplate.Scripts.Systems.SaveLoad;
 using GameTemplate.Scripts.Systems.Scene;
 using UnityEngine;
 using VContainer;
@@ -28,7 +29,9 @@ namespace GameTemplate.Scripts.Scopes
 
             builder.Register<AudioService>(Lifetime.Singleton);
             builder.Register<PoolingService>(Lifetime.Singleton);
+            builder.Register<SaveLoadSystem>(Lifetime.Singleton);
             builder.Register<ISceneService, SceneService>(Lifetime.Singleton);
+            
             builder.RegisterComponentInHierarchy<LoadingScreenController>();
             
             // Register the generated Controls class as a singleton

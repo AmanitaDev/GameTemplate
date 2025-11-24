@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameTemplate.Scripts.Systems.SaveLoad
 {
-    public class SaveLoadManager
+    public class SaveLoadSystem
     {
         private static string savePath => Path.Combine(Application.persistentDataPath, "save.json");
 

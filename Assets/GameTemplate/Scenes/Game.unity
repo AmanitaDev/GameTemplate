@@ -429,18 +429,18 @@ PrefabInstance:
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
       propertyPath: autoInjectGameObjects.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1253988263069806571}
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1253988263069806571}
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[2]'
@@ -615,65 +615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdee8ae70c4446f3bb8cb98081db6bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &975781401
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 975781404}
-  - component: {fileID: 975781403}
-  - component: {fileID: 975781402}
-  m_Layer: 0
-  m_Name: SaveLoad
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &975781402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975781401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 731b178d35a64fd4a25ad936b82deb91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveButton: {fileID: 1435320688}
---- !u!114 &975781403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975781401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 478a016597d945ef82007d0b0140ea51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  view: {fileID: 975781402}
---- !u!4 &975781404
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975781401}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1409482616
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,18 +705,6 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
---- !u!114 &1435320688 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 657717294608181210, guid: 42d9c019b4d171146b50cb384cad4fc6,
-    type: 3}
-  m_PrefabInstance: {fileID: 1253988263069806570}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1253988263069806570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -793,12 +722,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 975781401}
+      objectReference: {fileID: 0}
     - target: {fileID: 3231665580257502195, guid: 42d9c019b4d171146b50cb384cad4fc6,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 975781401}
+      objectReference: {fileID: 0}
     - target: {fileID: 7211399796698385727, guid: 42d9c019b4d171146b50cb384cad4fc6,
         type: 3}
       propertyPath: m_Pivot.x
@@ -920,4 +849,3 @@ SceneRoots:
   - {fileID: 437737877}
   - {fileID: 1409482619}
   - {fileID: 1253988263069806570}
-  - {fileID: 975781404}

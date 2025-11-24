@@ -5,11 +5,10 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using VContainer;
-using VContainer.Unity;
 
 namespace GameTemplate.Scripts.Systems.Scene
 {
-    public class SceneService : ISceneService, IStartable
+    public class SceneService : ISceneService
     {
         public event Action OnBeforeSceneLoad = delegate { };
 
@@ -30,10 +29,6 @@ namespace GameTemplate.Scripts.Systems.Scene
             {
                 sceneName = _data.nameOfSceneUIScene
             });*/
-        }
-
-        public void Start()
-        {
         }
 
         public void LoadMenuScene()

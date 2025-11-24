@@ -1,6 +1,7 @@
 using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Scene;
 using GameTemplate.Scripts.UI.Game;
+using GameTemplate.Scripts.UI.Game.EscapeMenu;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -16,29 +17,20 @@ namespace GameTemplate.Scripts.Scopes
 
         [Inject] ISceneService _sceneService;
         [Inject] AudioService _audioService;
-
-
-        protected override void Start()
-        {
-            base.Start();
-
-            //Do some things here
-        }
-
+        
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
             
             builder.RegisterComponentInHierarchy<UIGameCanvas>();
+
+            
+            builder.RegisterEntryPoint<EscapeMenuController>();
+            builder.RegisterComponentInHierarchy<EscapeMenuView>();
             
             // Register the MenuMusicStarter as an entry point
             // VContainer will instantiate this class and call its Start() method.
             builder.RegisterEntryPoint<GameMusicStarter>();
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
         }
     }
 }
