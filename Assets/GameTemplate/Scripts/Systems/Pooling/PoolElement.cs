@@ -44,15 +44,7 @@ namespace GameTemplate.Systems.Pooling
 
         public void GoBackToPool()
         {
-            _poolingService.GoBackToPool(this);
+            _poolingService.GoBackToPool(gameObject);
         }
-
-        /*private void OnTransformParentChanged()
-        {
-            if(transform.parent != _poolingService.poolParent)
-            {
-                _poolingService.PoolElementParentChanged(this);
-            }
-        }*/
     }
 }

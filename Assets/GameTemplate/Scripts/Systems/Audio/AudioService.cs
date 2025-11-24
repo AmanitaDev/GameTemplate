@@ -4,7 +4,6 @@ using Cysharp.Threading.Tasks;
 using GameTemplate.Scripts.Systems.Pooling;
 using GameTemplate.Utils;
 using UnityEngine;
-using VContainer;
 using Object = UnityEngine.Object;
 
 namespace GameTemplate.Scripts.Systems.Audio

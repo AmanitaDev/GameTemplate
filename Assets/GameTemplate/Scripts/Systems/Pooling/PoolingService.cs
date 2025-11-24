@@ -1,22 +1,33 @@
 using System.Collections.Generic;
-using System.Linq;
 using GameTemplate.Systems.Pooling;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
 namespace GameTemplate.Scripts.Systems.Pooling
 {
+    /// <summary>
+    /// Global service responsible for managing the object pool.
+    /// It handles pre-spawning, retrieval, and recycling of GameObjects efficiently.
+    /// This service is registered as a MonoBehaviour component in the scene and uses Method Injection.
+    /// </summary>
     public class PoolingService : MonoBehaviour
     {
+        // Parent Transform to organize all pooled GameObjects in the hierarchy.
         [HideInInspector] public Transform poolParent;
         PoolID testPoolId = 0;
         
-        // we store pooled objects in this dictionary
+        // Dictionary for storing the actual pooled objects (Queues provide O(1) retrieval time).
         private Dictionary<PoolID, Queue<GameObject>> objectPool = new Dictionary<PoolID, Queue<GameObject>>();
-        // wes store pool objects that parents changed in this dictionary. this way we can retrieve them back
+        
+        // Dictionary for fast O(1) lookup of the prefab data based on PoolID. 
+        // This replaces the slow LINQ search previously used in GetGameObjectById.
+        private Dictionary<PoolID, PoolObject> _prefabLookup = new Dictionary<PoolID, PoolObject>();
+        
+        // We store pool objects that parents changed in this dictionary. 
+        // This way we can retrieve them back during a global ResetPool operation.
         [SerializeField] private List<PoolElement> parentsChangedPoolObjects = new List<PoolElement>();
 
+        // Injected data source containing pool configuration.
         PoolingDataSO _poolingDataSoDataSo;
 
         [Inject]
@@ -27,176 +38,170 @@ namespace GameTemplate.Scripts.Systems.Pooling
             SpawnObjects();
         }
 
+        /// <summary>
+        /// Initializes the pool by creating the parent object and pre-spawning all configured GameObjects.
+        /// </summary>
         void SpawnObjects()
         {
             Debug.Log("Initialize PoolingService");
             poolParent = new GameObject("_PoolParent").transform;
             DontDestroyOnLoad(poolParent.gameObject);
             
+            // Populate both the object pool and the prefab lookup dictionary for efficiency.
             for (int i = 0; i < _poolingDataSoDataSo.poolObjects.Length; i++)
             {
-                objectPool.Add((PoolID)i, new Queue<GameObject>());
-                for (int z = 0; z < _poolingDataSoDataSo.poolObjects[i].objectCount; z++)
+                PoolID currentID = (PoolID)i;
+                PoolObject poolObj = _poolingDataSoDataSo.poolObjects[i];
+
+                objectPool.Add(currentID, new Queue<GameObject>());
+                _prefabLookup.Add(currentID, poolObj); // O(1) lookup for prefab data
+
+                for (int z = 0; z < poolObj.objectCount; z++)
                 {
-                    GameObject newObject = Object.Instantiate(_poolingDataSoDataSo.poolObjects[i].objectPrefab, poolParent);
+                    GameObject newObject = Instantiate(poolObj.objectPrefab, poolParent);
                     newObject.SetActive(false);
                     newObject.GetComponent<PoolElement>()
-                        .Initialize(_poolingDataSoDataSo.poolObjects[i].goBackOnDisable, (PoolID)i);
-                    objectPool[(PoolID)i].Enqueue(newObject);
+                        .Initialize(poolObj.goBackOnDisable, currentID);
+                    objectPool[currentID].Enqueue(newObject);
                 }
             }
         }
 
-        public void ResetPool()
-        {
-            for (int i = 0; i < parentsChangedPoolObjects.Count; i++)
-            {
-                parentsChangedPoolObjects[i].transform.SetParent(poolParent);
-            }
-
-            parentsChangedPoolObjects.Clear();
-            PoolElement[] children = poolParent.GetComponentsInChildren<PoolElement>();
-            for (int i = 0; i < children.Length; i++)
-            {
-                children[i].gameObject.SetActive(false);
-            }
-        }
-
-        public void OnPoolElementDestroyed(PoolElement destroyedPoolElement)
-        {
-            Debug.Log("element Destroyed : " + destroyedPoolElement);
-        }
-
-        public void GoBackToPool(GameObject poolObject)
-        {
-            poolObject.transform.SetParent(poolParent);
-            objectPool[poolObject.GetComponent<PoolElement>().PoolId].Enqueue(poolObject);
-        }
-
-        public GameObject GetParticleById(PoolID poolId, Transform referance)
-        {
-            return GetParticleById(poolId, referance.position, Vector3.one);
-        }
-
-        public GameObject GetParticleById(PoolID poolId, Transform referance, Vector3 targetScale)
-        {
-            return GetParticleById(poolId, referance.position, targetScale);
-        }
-
-        public GameObject GetParticleById(PoolID poolId, Vector3 position, Vector3 targetScale,
-            Transform parentInfo = null)
-        {
-            GameObject particle = GetGameObjectById(poolId, position, Quaternion.identity);
-            particle.transform.localScale = targetScale;
-            if (parentInfo != null)
-            {
-                particle.transform.SetParent(parentInfo.parent);
-                parentInfo.transform.localPosition = parentInfo.localPosition;
-            }
-
-            particle.GetComponent<ParticleSystem>().Play();
-            return particle;
-        }
-
+        /// <summary>
+        /// Gets a GameObject from the pool by its PoolID. Default position and rotation.
+        /// </summary>
         public GameObject GetGameObjectById(PoolID poolId)
         {
-            return GetGameObjectById(poolId, Vector3.zero, Quaternion.identity);
+            return GetGameObjectById(poolId, Vector3.zero, Quaternion.identity, Vector3.one);
         }
 
+        /// <summary>
+        /// Gets a GameObject from the pool using a reference Transform for position and rotation.
+        /// </summary>
         public GameObject GetGameObjectById(PoolID poolId, Transform objectTransform)
         {
-            return GetGameObjectById(poolId, objectTransform.position, objectTransform.rotation);
+            return GetGameObjectById(poolId, objectTransform.position, objectTransform.rotation, objectTransform.localScale);
         }
 
-        public GameObject GetGameObjectById(PoolID poolId, Vector3 position)
-        {
-            return GetGameObjectById(poolId, position, Quaternion.identity);
-        }
-
+        /// <summary>
+        /// Gets a GameObject from the pool, specifying position and rotation.
+        /// </summary>
         public GameObject GetGameObjectById(PoolID poolId, Vector3 position, Quaternion rotation)
         {
-            if (!objectPool.ContainsKey(poolId))
-            {
-                objectPool.Add(poolId, new Queue<GameObject>());
-            }
-
-            if (objectPool[poolId].Count != 0)
-            {
-                GameObject poolObject = objectPool[poolId].Dequeue();
-                poolObject.transform.position = position;
-                poolObject.transform.rotation = rotation;
-                poolObject.SetActive(true);
-                return poolObject;
-            }
-
-            PoolObject selectedPoolObject =
-                _poolingDataSoDataSo.poolObjects.Where(x => x.poolName.Equals(poolId.ToString())).First();
-
-            if (selectedPoolObject != null)
-            {
-                GameObject poolObject = Object.Instantiate(selectedPoolObject.objectPrefab, position, rotation);
-                poolObject.transform.SetParent(poolParent);
-                poolObject.GetComponent<PoolElement>().Initialize(selectedPoolObject.goBackOnDisable, poolId);
-                poolObject.SetActive(true);
-                return poolObject;
-            }
-
-            return null;
+            return GetGameObjectById(poolId, position, rotation, Vector3.one);
         }
 
+        /// <summary>
+        /// Gets a GameObject from the pool, specifying position, rotation, and scale.
+        /// This is the master retrieval method.
+        /// </summary>
         public GameObject GetGameObjectById(PoolID poolId, Vector3 position, Quaternion rotation, Vector3 targetScale)
         {
+            // Ensure the PoolID exists in the main dictionary
             if (!objectPool.ContainsKey(poolId))
             {
+                // This scenario should be rare if SpawnObjects is correct, but handles unexpected IDs.
                 objectPool.Add(poolId, new Queue<GameObject>());
             }
 
+            GameObject poolObject;
+            bool wasPooled = false;
+
+            // 1. Try to retrieve from the pool queue
             if (objectPool[poolId].Count != 0)
             {
-                GameObject poolObject = objectPool[poolId].Dequeue();
-                poolObject.transform.position = position;
-                poolObject.transform.rotation = rotation;
-                poolObject.transform.localScale = targetScale;
-                poolObject.SetActive(true);
-                return poolObject;
+                poolObject = objectPool[poolId].Dequeue();
+                wasPooled = true;
             }
-
-            PoolObject selectedPoolObject =
-                _poolingDataSoDataSo.poolObjects.Where(x => x.poolName.Equals(poolId.ToString())).First();
-
-            if (selectedPoolObject != null)
+            // 2. Instantiate a new object if the queue is empty (dynamic expansion)
+            else if (_prefabLookup.ContainsKey(poolId)) // Check lookup for prefab data
             {
-                GameObject poolObject = Object.Instantiate(selectedPoolObject.objectPrefab, position, rotation);
-                poolObject.transform.SetParent(poolParent);
+                PoolObject selectedPoolObject = _prefabLookup[poolId]; // O(1) lookup
+                poolObject = Object.Instantiate(selectedPoolObject.objectPrefab, position, rotation, poolParent);
                 poolObject.GetComponent<PoolElement>().Initialize(selectedPoolObject.goBackOnDisable, poolId);
-                poolObject.transform.localScale = targetScale;
-                poolObject.SetActive(true);
-                return poolObject;
+            }
+            else
+            {
+                Debug.LogError($"[PoolingService] PoolID {poolId} not found in configuration!");
+                return null;
             }
 
-            return null;
+            // --- Configuration of the retrieved/instantiated object ---
+            poolObject.transform.position = position;
+            poolObject.transform.rotation = rotation;
+            poolObject.transform.localScale = targetScale;
+            
+            // Only set active if it came from the pool (newly instantiated objects are usually active by default)
+            if (wasPooled)
+            {
+                poolObject.SetActive(true);
+            }
+            
+            return poolObject;
         }
 
-        public void GoBackToPool(PoolElement elementToGoBackToPool)
+        /// <summary>
+        /// Recycles a GameObject after finding its PoolElement component.
+        /// This method is potentially slow due to GetComponent lookup.
+        /// </summary>
+        public void GoBackToPool(GameObject poolObject)
         {
-            objectPool[elementToGoBackToPool.PoolId].Enqueue(elementToGoBackToPool.gameObject);
+            PoolElement element = poolObject.GetComponent<PoolElement>();
+            if (element != null)
+            {
+                GoBackToPool(element.PoolId, poolObject);
+            }
+            else
+            {
+                Debug.LogError($"Attempted to return object without PoolElement to pool: {poolObject.name}");
+            }
         }
-
+        
+        /// <summary>
+        /// The master recycling method: deactivates, resets parent, and enqueues the object.
+        /// </summary>
         public void GoBackToPool(PoolID poolId, GameObject objectToAddPool)
         {
             objectToAddPool.SetActive(false);
-            objectPool[poolId].Enqueue(objectToAddPool);
+            objectToAddPool.transform.SetParent(poolParent);
+            
+            if (objectPool.ContainsKey(poolId))
+            {
+                objectPool[poolId].Enqueue(objectToAddPool);
+            }
+            else
+            {
+                // Should not happen, but prevents loss of object if ID is missing.
+                Debug.LogWarning($"PoolID {poolId} not found during recycling. Object was deactivated but not re-pooled.");
+            }
         }
 
-        public void PoolElementParentChanged(PoolElement parentChangedObject)
+        /// <summary>
+        /// Resets the pool by returning all parents-changed objects and deactivating all children.
+        /// Typically called on scene exit or game reset.
+        /// </summary>
+        public void ResetPool()
         {
-            parentsChangedPoolObjects.Add(parentChangedObject);
-        }
+            // 1. Restore the parent of all dynamically parented objects
+            for (int i = 0; i < parentsChangedPoolObjects.Count; i++)
+            {
+                if (parentsChangedPoolObjects[i] != null)
+                {
+                    parentsChangedPoolObjects[i].transform.SetParent(poolParent);
+                }
+            }
+            parentsChangedPoolObjects.Clear();
 
-        [Button("TestGetObject")]
-        public void GetTestGameObject()
-        {
-            GetGameObjectById(testPoolId);
+            // 2. Deactivate all existing pooled objects in the hierarchy
+            // This is a safety measure to catch objects that were never properly returned to the queue.
+            PoolElement[] children = poolParent.GetComponentsInChildren<PoolElement>(true); // Search inactive children too
+            for (int i = 0; i < children.Length; i++)
+            {
+                if (children[i].gameObject.activeSelf)
+                {
+                    children[i].gameObject.SetActive(false);
+                }
+            }
         }
     }
 }
