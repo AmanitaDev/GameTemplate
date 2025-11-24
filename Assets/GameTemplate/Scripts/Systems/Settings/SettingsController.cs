@@ -19,7 +19,7 @@ namespace GameTemplate.Scripts.Systems.Settings
             List<string> resolutionOptions = new List<string>();
             foreach (var resolution in Screen.resolutions.Reverse())
             {
-                resolutionOptions.Add($"{resolution.width}x{resolution.height} - {resolution.refreshRate}hz");
+                resolutionOptions.Add($"{resolution.width}x{resolution.height} - {resolution.refreshRateRatio}hz");
             }
             View.ResolutionDropdown.AddOptions(resolutionOptions);
             // find and set default resolution to the 1920x1080

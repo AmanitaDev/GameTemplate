@@ -14,7 +14,6 @@ namespace GameTemplate.Scripts.Systems.Pooling
     {
         // Parent Transform to organize all pooled GameObjects in the hierarchy.
         [HideInInspector] public Transform poolParent;
-        PoolID testPoolId = 0;
         
         // Dictionary for storing the actual pooled objects (Queues provide O(1) retrieval time).
         private Dictionary<PoolID, Queue<GameObject>> objectPool = new Dictionary<PoolID, Queue<GameObject>>();
