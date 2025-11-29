@@ -7,8 +7,10 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
     {
         public GameObject menuPanel;
         public Button resumeButton;
+        public Button menuButton;
         public Button saveButton;
         public Button loadButton;
+        public Button settingsButton;
         public Button quitButton;
         
         public void ShowHideMenu(bool show)
@@ -16,6 +18,5 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
             if (menuPanel != null)
                 menuPanel.SetActive(show);
         }
-
     }
 }

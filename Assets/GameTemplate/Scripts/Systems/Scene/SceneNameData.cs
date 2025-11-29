@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace GameTemplate.Scripts.Systems.Scene
@@ -7,5 +8,7 @@ namespace GameTemplate.Scripts.Systems.Scene
     {
         public AssetReference scene;
         public string         sceneName;
+        [HideInInspector]
+        public SceneID sceneId;
     }
 }

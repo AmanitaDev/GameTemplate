@@ -1,5 +1,4 @@
 using GameTemplate.Scripts.Systems.Audio;
-using GameTemplate.Scripts.Systems.Scene;
 using GameTemplate.Scripts.UI.Game;
 using GameTemplate.Scripts.UI.Game.EscapeMenu;
 using UnityEngine;
@@ -14,9 +13,6 @@ namespace GameTemplate.Scripts.Scopes
         public override GameState ActiveState => GameState.Game;
 
         [SerializeField] private UIGameCanvas uiGameCanvas;
-
-        [Inject] ISceneService _sceneService;
-        [Inject] AudioService _audioService;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -25,7 +21,7 @@ namespace GameTemplate.Scripts.Scopes
             builder.RegisterComponentInHierarchy<UIGameCanvas>();
 
             
-            builder.RegisterEntryPoint<EscapeMenuController>();
+            builder.RegisterEntryPoint<EscapeMenuController>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<EscapeMenuView>();
             
             // Register the MenuMusicStarter as an entry point

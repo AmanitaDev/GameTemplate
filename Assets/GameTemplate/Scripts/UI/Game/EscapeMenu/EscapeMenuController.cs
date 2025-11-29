@@ -1,44 +1,64 @@
+using System;
 using GameTemplate.Scripts.Systems.Input;
 using GameTemplate.Scripts.Systems.SaveLoad;
+using GameTemplate.Scripts.Systems.Scene;
+using GameTemplate.Scripts.Systems.Settings;
 using UnityEngine;
+using VContainer;
 using VContainer.Unity;
 
 namespace GameTemplate.Scripts.UI.Game.EscapeMenu
 {
-    public class EscapeMenuController: IInitializable
+    public class EscapeMenuController: IStartable
     {
         public EscapeMenuView _view;
         private SaveLoadSystem _saveLoadSystem;
+        private SettingsController _settingsController;
+        private ISceneService _sceneService;
         
         private Controls _controls;
         public bool _isMenuOpen = false;
 
-        // Dependencies are injected via the constructor
-        public EscapeMenuController(Controls controls, EscapeMenuView view, SaveLoadSystem saveLoadSystem)
+        [Inject]
+        public void Construct(Controls controls, EscapeMenuView view, SaveLoadSystem saveLoadSystem,
+            SettingsController settingsController, ISceneService sceneService)
         {
             _controls = controls;
             _controls.Enable();
             _view = view;
             _saveLoadSystem = saveLoadSystem;
-            
-            // Bind buttons
-            _view.resumeButton.onClick.AddListener(ToggleMenu);
-            _view.saveButton.onClick.AddListener(SaveGame);
-            _view.loadButton.onClick.AddListener(LoadGame);
-            _view.quitButton.onClick.AddListener(QuitGame);
-            Debug.LogError("EscapeMenuController::ShowHideMenu() called");
-            _controls.UI.Cancel.performed += ctx => ToggleMenu();
+            _settingsController = settingsController;
+            _sceneService = sceneService;
         }
         
-        public void Initialize()
+        public void Start()
         {
+            // Bind buttons
+            _view.resumeButton.onClick.AddListener(ToggleMenu);
+            _view.menuButton.onClick.AddListener(ReturnMainMenu);
+            _view.saveButton.onClick.AddListener(SaveGame);
+            _view.loadButton.onClick.AddListener(LoadGame);
+            _view.settingsButton.onClick.AddListener(_settingsController.OpenCanvas);
+            _view.quitButton.onClick.AddListener(QuitGame);
             
+            _controls.UI.Cancel.performed += ctx => ToggleMenu();
         }
 
         private void ToggleMenu()
         {
             _isMenuOpen = !_isMenuOpen;
             _view.ShowHideMenu(_isMenuOpen);
+        }
+
+        public void ReturnMainMenu()
+        {
+            _sceneService.LoadScene(new SceneLoadData
+            {
+                sceneEnum = SceneID.Menu,
+                unloadCurrent = true,
+                activateLoadingCanvas = true,
+                setActiveScene = true
+            });
         }
 
         private void SaveGame()

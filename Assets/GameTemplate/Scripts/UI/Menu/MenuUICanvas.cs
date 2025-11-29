@@ -1,5 +1,5 @@
-using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.Systems.Scene;
+using GameTemplate.Scripts.Systems.Settings;
 using GameTemplate.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,14 +14,14 @@ namespace GameTemplate.Scripts.UI.Menu
         [SerializeField] GameObject ConfirmPanel;
 
         ISceneService _sceneService;
-        AudioService _audioService;
-        
+        SettingsController _settingsController;
+
         [Inject]
-        public void Construct(ISceneService sceneLoader, AudioService audioService)
+        public void Construct(ISceneService sceneService, SettingsController settingsController)
         {
             Debug.Log("Construct MenuUICanvas");
-            _sceneService = sceneLoader;
-            _audioService = audioService;
+            _sceneService = sceneService;
+            _settingsController = settingsController;
 
             ContinueButton.interactable = !UserPrefs.IsFirstPlay;
         }
@@ -43,6 +43,11 @@ namespace GameTemplate.Scripts.UI.Menu
             LoadGameScene();
         }
 
+        public void SettingsButtonClick()
+        {
+            _settingsController.OpenCanvas();
+        }
+
         public void StartOverClick()
         {
             UserPrefs.DeleteAll();
@@ -53,7 +58,7 @@ namespace GameTemplate.Scripts.UI.Menu
         {
             _sceneService.LoadScene(new SceneLoadData
             {
-                sceneName = "Game",
+                sceneEnum = SceneID.Game,
                 unloadCurrent = true,
                 activateLoadingCanvas = true,
                 setActiveScene = true

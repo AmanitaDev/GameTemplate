@@ -35,7 +35,7 @@ namespace GameTemplate.Scripts.Systems.Scene
         {
             LoadScene(new SceneLoadData
             {
-                sceneName = _dataSo.nameOfSceneToLoadOnOpening,
+                sceneEnum = _dataSo.idOfSceneToLoadOnOpening,
                 unloadCurrent = false,
                 activateLoadingCanvas = true,
                 setActiveScene = true
@@ -53,7 +53,7 @@ namespace GameTemplate.Scripts.Systems.Scene
             if (sceneLoadData.unloadCurrent)
                 await UnloadScene();
 
-            var sceneReference = _dataSo.GetSceneByName(sceneLoadData.sceneName);
+            var sceneReference = _dataSo.GetSceneById(sceneLoadData.sceneEnum);
 
             var result = await Addressables.LoadSceneAsync(sceneReference, LoadSceneMode.Additive);
 
