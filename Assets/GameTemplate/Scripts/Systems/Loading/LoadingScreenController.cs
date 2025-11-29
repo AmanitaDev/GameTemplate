@@ -24,7 +24,7 @@ namespace GameTemplate.Scripts.Systems.Loading
         [Inject]
         public void Construct(ISceneService sceneService)
         {
-            Debug.Log("Construct LoadingScreen");
+            //Debug.Log("Construct LoadingScreen");
             _sceneService = sceneService;
             _sceneService.OnBeforeSceneLoad += OpenLoadingScreen;
             _sceneService.OnSceneLoaded += CloseLoadingScreen;
@@ -41,7 +41,7 @@ namespace GameTemplate.Scripts.Systems.Loading
             SetCanvasVisibility(true);
             loadingScreenActive = true;
             cameraObject.SetActive(true);
-            Debug.LogError("open canvas");
+            //Debug.LogError("open canvas");
             if (loadingScreenActive)
             {
                 if (fadeOutCoroutine != null)
@@ -54,7 +54,7 @@ namespace GameTemplate.Scripts.Systems.Loading
 
         public void CloseLoadingScreen()
         {
-            Debug.LogError("close canvas");
+            //Debug.LogError("close canvas");
             cameraObject.SetActive(false);
             if (loadingScreenActive)
             {
