@@ -405,12 +405,12 @@ PrefabInstance:
         type: 3}
       propertyPath: uiGameCanvas
       value: 
-      objectReference: {fileID: 437737878}
+      objectReference: {fileID: 0}
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
       propertyPath: _uiGameCanvas
       value: 
-      objectReference: {fileID: 437737878}
+      objectReference: {fileID: 0}
     - target: {fileID: 4629301544744335344, guid: 54777abe90f9c0a4faebffe40bd2a6ea,
         type: 3}
       propertyPath: _winParticleImage
@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 437737874}
   - component: {fileID: 437737878}
   m_Layer: 5
-  m_Name: UIGameCanvas
+  m_Name: GameCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 437737873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdee8ae70c4446f3bb8cb98081db6bfb, type: 3}
+  m_Script: {fileID: 11500000, guid: b9454cd7490c46a98689ceebc0fc3bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1409482616

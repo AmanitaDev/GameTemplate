@@ -8,40 +8,40 @@ using VContainer.Unity;
 
 namespace GameTemplate.Scripts.UI.Menu
 {
-    public class MainMenuController : IStartable
+    public class MenuCanvasController : IStartable
     {
         ISceneService _sceneService;
         SettingsController _settingsController;
 
-        private MainMenuView _view;
+        private MenuCanvasView _canvasView;
 
         [Inject]
-        public void Construct(ISceneService sceneService, SettingsController settingsController, MainMenuView view)
+        public void Construct(ISceneService sceneService, SettingsController settingsController, MenuCanvasView canvasView)
         {
             Debug.Log("Construct MenuUICanvas");
             _sceneService = sceneService;
             _settingsController = settingsController;
-            _view = view;
+            _canvasView = canvasView;
 
-            _view.ChangeContinueButton(!UserPrefs.IsFirstPlay);
+            _canvasView.ChangeContinueButton(!UserPrefs.IsFirstPlay);
         }
 
         public void Start()
         {
-            _view.ContinueButton.AddClickListener(ContinueButtonClick);
-            _view.PlayButton.AddClickListener(PlayButtonClick);
-            _view.SettingsButton.AddClickListener(SettingsButtonClick);
-            _view.QuitButton.AddClickListener(QuitGame);
+            _canvasView.ContinueButton.AddClickListener(ContinueButtonClick);
+            _canvasView.PlayButton.AddClickListener(PlayButtonClick);
+            _canvasView.SettingsButton.AddClickListener(SettingsButtonClick);
+            _canvasView.QuitButton.AddClickListener(QuitGame);
             
-            _view.ConfirmButton.AddClickListener(ConfirmButtonClick);
-            _view.CancelButton.AddClickListener(CancelButtonClick);
+            _canvasView.ConfirmButton.AddClickListener(ConfirmButtonClick);
+            _canvasView.CancelButton.AddClickListener(CancelButtonClick);
         }
         
         public void PlayButtonClick()
         {
             if (!UserPrefs.IsFirstPlay)
             {
-                _view.ChangeConfirmPanel(true);
+                _canvasView.ChangeConfirmPanel(true);
                 return;
             }
 
@@ -77,7 +77,7 @@ namespace GameTemplate.Scripts.UI.Menu
         
         public void CancelButtonClick()
         {
-            _view.ChangeConfirmPanel(false);
+            _canvasView.ChangeConfirmPanel(false);
         }
 
         public void LoadGameScene()

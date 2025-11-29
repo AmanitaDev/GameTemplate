@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace GameTemplate.Scripts.UI.Menu
 {
-    public class MainMenuView : MonoBehaviour
+    public class MenuCanvasView : MonoBehaviour
     {
         public Button ContinueButton;
         public Button PlayButton;

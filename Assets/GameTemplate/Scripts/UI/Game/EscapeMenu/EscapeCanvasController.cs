@@ -9,9 +9,9 @@ using VContainer.Unity;
 
 namespace GameTemplate.Scripts.UI.Game.EscapeMenu
 {
-    public class EscapeMenuController: IStartable
+    public class EscapeCanvasController: IStartable
     {
-        public EscapeMenuView _view;
+        public EscapeCanvasView _view;
         private SaveLoadSystem _saveLoadSystem;
         private SettingsController _settingsController;
         private ISceneService _sceneService;
@@ -20,7 +20,7 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
         public bool _isMenuOpen = false;
 
         [Inject]
-        public void Construct(Controls controls, EscapeMenuView view, SaveLoadSystem saveLoadSystem,
+        public void Construct(Controls controls, EscapeCanvasView view, SaveLoadSystem saveLoadSystem,
             SettingsController settingsController, ISceneService sceneService)
         {
             _controls = controls;

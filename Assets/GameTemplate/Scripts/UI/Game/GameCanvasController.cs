@@ -1,11 +1,11 @@
-using DG.Tweening;
 using GameTemplate.Scripts.Systems.Scene;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace GameTemplate.Scripts.UI.Game
 {
-    public class UIGameCanvas : MonoBehaviour
+    public class GameCanvasController: IStartable
     {
         ISceneService _sceneService;
 
@@ -14,6 +14,11 @@ namespace GameTemplate.Scripts.UI.Game
         {
             Debug.Log("Construct UIGameCanvas");
             _sceneService = sceneService;
+        }
+
+        public void Start()
+        {
+            
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace GameTemplate.Scripts.UI.Game.EscapeMenu
 {
-    public class EscapeMenuView : MonoBehaviour
+    public class EscapeCanvasView : MonoBehaviour
     {
         public GameObject menuPanel;
         public Button resumeButton;

@@ -22,8 +22,8 @@ namespace GameTemplate.Scripts.Scopes
             // VContainer will instantiate this class and call its Start() method.
             builder.RegisterEntryPoint<MenuMusicStarter>();
             
-            builder.RegisterEntryPoint<MainMenuController>();
-            builder.RegisterComponentInHierarchy<MainMenuView>();
+            builder.RegisterEntryPoint<MenuCanvasController>();
+            builder.RegisterComponentInHierarchy<MenuCanvasView>();
         }
     }
 }
