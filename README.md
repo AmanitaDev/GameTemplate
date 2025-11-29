@@ -3,7 +3,6 @@ Included systems:
 * Audio
 * Input
 * Loading screen
-* MVC
 * Pooling
 * Save/Load
 * Scene management
